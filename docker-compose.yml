@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: otp-db
+    hostname: otpdb
+    environment:
+      POSTGRES_PASSWORD: otp-pass
+      POSTGRES_USER: otp
+      POSTGRES_DB: otpdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:

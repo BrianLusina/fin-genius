@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: auth
+  name: otp-svc
+  labels: &OtpGen
+    app: otp
+    role: otp
+    stack: backend
+    tier: auth
+    version: v1
+spec:
+  selector: *OtpGen
+  ports:
+    - port: 9000
+      name: http

@@ -1,0 +1,129 @@
+include:
+  - project: "sanctumlabs/tools/gitlab-ci"
+    file: "/templates/hadolint.yml"
+
+# This is the Gradle build system for JVM applications
+# https://gradle.org/
+# https://github.com/gradle/gradle
+image: gradle:alpine
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - lint
+  - test
+  - build
+  - docker
+
+cache:
+  paths:
+    - .gradle
+
+lint:
+  stage: lint
+  script: ./gradlew detekt
+
+hadolint:
+  variables:
+    DOCKERFILES: "./Dockerfile"
+
+unittest:
+  stage: test
+  needs:
+    - lint
+  script:
+    - ./gradlew unittest
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - .gradle
+
+integrationtest:
+  stage: test
+  needs:
+    - lint
+  variables:
+    # Instruct Testcontainers to use the daemon of DinD.
+    DOCKER_HOST: "tcp://docker:2375"
+    # Instruct Docker not to start over TLS.
+    DOCKER_TLS_CERTDIR: ""
+    # Improve performance with overlayfs.
+    DOCKER_DRIVER: overlay2
+  services:
+    - name: docker:dind
+      # explicitly disable tls to avoid docker startup interruption
+      command: [ "--tls=false" ]
+  script:
+    - ./gradlew integrationtest
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - .gradle
+
+e2e:
+  stage: test
+  needs:
+    - lint
+  variables:
+    # Instruct Testcontainers to use the daemon of DinD.
+    DOCKER_HOST: "tcp://docker:2375"
+    # Instruct Docker not to start over TLS.
+    DOCKER_TLS_CERTDIR: ""
+    # Improve performance with overlayfs.
+    DOCKER_DRIVER: overlay2
+  services:
+    - name: docker:dind
+      # explicitly disable tls to avoid docker startup interruption
+      command: [ "--tls=false" ]
+  script:
+    - docker compose up -d
+    - ./gradlew e2e
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - .gradle
+
+build:
+  stage: build
+  needs:
+    - unittest
+    - integrationtest
+    - e2e
+  artifacts:
+    paths:
+      - app/build/libs
+    expire_in: 1 week
+  script: ./gradlew build -x test -x copyGitHooks -x installGitHooks -x detekt -x detektMain --no-daemon
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - .gradle
+
+build_docker:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: docker
+  needs:
+    - build
+  dependencies:
+    - build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY/$CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY/$CI_REGISTRY_IMAGE:latest
+  only:
+    - main
