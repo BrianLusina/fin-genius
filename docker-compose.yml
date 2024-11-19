@@ -1,18 +1,67 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:15
-    container_name: otp-db
-    hostname: otpdb
+  postgresdb:
+    image: postgres:17.1-alpine3.20
+    container_name: fingenius-postgresdb
+    hostname: fingenius-postgresdb
     environment:
-      POSTGRES_PASSWORD: otp-pass
-      POSTGRES_USER: otp
-      POSTGRES_DB: otpdb
+      POSTGRES_PASSWORD: fingenius-pass
+      POSTGRES_USER: fingenius
+      POSTGRES_DB: fingeniusdb
     ports:
       - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgresdb:/var/lib/postgresql/data
+
+  mongodb:
+    image: mongo:8.0.3
+    container_name: fingenius-mongodb
+    hostname: fingenius-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: fingeniusUser
+      MONGO_INITDB_ROOT_PASSWORD: fingeniusPassword
+      MONGO_INITDB_DATABASE: fingeniusdb
+      MONGO_INITDB_USER: fingeniusUser
+      MONGO_INITDB_PASSWORD: fingeniusPassword
+    volumes:
+      - mongodb:/data/db
+
+  sonar:
+    image: sonarqube:9.9.7-community
+    container_name: fingenius-sonar
+    ports:
+      - "9001:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-db:5433/fingenius_sonar_db
+      SONAR_JDBC_USERNAME: fingenius-sonar
+      SONAR_JDBC_PASSWORD: fingenius-sonar_pass
+    profiles:
+      - sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
+  sonar-db:
+    image: postgres:17.1-alpine3.20
+    container_name: fingenius-sonar-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: sonar_pass
+      POSTGRES_USER: sonar
+      POSTGRES_DB: sonar_db
+    profiles:
+      - sonar
+    ports:
+      - "5433:5432"
+    volumes:
+      - sonardb:/var/lib/postgresql/data
 
 volumes:
-  db:
+  postgresdb:
+  mongodb:
+  sonardb:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:

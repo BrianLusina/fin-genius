@@ -191,6 +191,7 @@ subprojects {
         testRuntimeOnly(Dependencies.Kotlin.reflect)
         testImplementation(Dependencies.Test.kotlinTest)
         testImplementation(Dependencies.Test.mockK)
+        testImplementation(Dependencies.Test.Jupiter.test)
         testImplementation(Dependencies.Test.Jupiter.api)
         testImplementation(Dependencies.Test.Jupiter.engine)
         testImplementation(Dependencies.Test.Spek.dslJvm)

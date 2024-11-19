@@ -5,12 +5,8 @@ plugins {
 dependencies {
     implementation(project(":app:core"))
 
-    implementation(Dependencies.Database.hikariConnectionPooling)
-    implementation(Dependencies.Database.postgres)
-    implementation(Dependencies.Database.Exposed.core)
-    implementation(Dependencies.Database.Exposed.jdbc)
-    implementation(Dependencies.Database.Exposed.dao)
-    implementation(Dependencies.Database.Exposed.javaTime)
+    implementation(Dependencies.Database.MongoDb.bsonKotlinX)
+    implementation(Dependencies.Database.MongoDb.driverCoroutine)
 
     implementation(Dependencies.Kotlin.X.datetime)
 

@@ -1,4 +1,4 @@
-# OTP Jenereta
+# FinGenius
 
 [![Build](https://github.com/SanctumLabs/otp-jenerata/actions/workflows/build.yml/badge.svg)](https://github.com/SanctumLabs/otp-jenerata/actions/workflows/build.yml)
 [![Lint](https://github.com/SanctumLabs/otp-jenerata/actions/workflows/lint.yml/badge.svg)](https://github.com/SanctumLabs/otp-jenerata/actions/workflows/lint.yml)
@@ -126,13 +126,13 @@ The jdk version used is `11.0`.
 To check quality, maintainability & vulnerability of the code, [SonarQube](https://docs.sonarqube.org/latest/) has been
 used to scan. This is done with the help
 of [SonarQube's Gradle Plugin](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-gradle/).
-To test this locally, there is a [docker-compose file](./docker-compose-sonar.yml) that can start a local installation
+To test this locally, there is a [docker-compose file](./docker-compose.yml) that can start a local installation
 of SonarQube in a Docker container.
 
 Start this with:
 
 ```bash
-docker-compose -f docker-compose-sonar.yml up
+docker-compose --profile sonar up
 ```
 
 > Note, ensure you have docker-compose already installed

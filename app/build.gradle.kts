@@ -40,10 +40,8 @@ dependencies {
 
     implementation(Dependencies.Utils.dotenv)
 
-    implementation(Dependencies.Database.hikariConnectionPooling)
-    implementation(Dependencies.Database.Exposed.core)
-    implementation(Dependencies.Database.Exposed.jdbc)
-    implementation(Dependencies.Database.Exposed.dao)
+    implementation(Dependencies.Database.MongoDb.driverCoroutine)
+    implementation(Dependencies.Database.MongoDb.bsonKotlinX)
 
     implementation(Dependencies.Telemetry.micrometerRegistryPrometheus)
     implementation(Dependencies.Utils.logbackClassic)

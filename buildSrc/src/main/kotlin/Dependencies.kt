@@ -1,6 +1,6 @@
 object Dependencies {
     object Ktor {
-        private const val version = "2.2.4"
+        private const val version = "3.0.1"
         const val coreJvm = "io.ktor:ktor-server-core-jvm:$version"
         const val openApi = "io.ktor:ktor-server-openapi:$version"
         const val serverContentNegotiation = "io.ktor:ktor-server-content-negotiation:$version"
@@ -23,7 +23,7 @@ object Dependencies {
     }
 
     object DI {
-        private const val koinVersion = "3.4.0"
+        private const val koinVersion = "4.0.0"
         const val koinCore = "io.insert-koin:koin-core:$koinVersion"
         const val koinCoreCoroutines = "io.insert-koin:koin-core-coroutines:$koinVersion"
         const val koinLogger = "io.insert-koin:koin-logger-slf4j:$koinVersion"
@@ -33,35 +33,17 @@ object Dependencies {
     }
 
     object Database {
-        const val postgres = "org.postgresql:postgresql:42.6.0"
-
-        const val liquibaseCore = "org.liquibase:liquibase-core:3.6.3"
-        const val flywayCore = "org.flywaydb:flyway-core:6.5.0"
-
-        // HikariCP (Connection Pooling)
-        const val hikariConnectionPooling = "com.zaxxer:HikariCP:5.0.1"
-
-        object Exposed {
-            private const val version = "0.41.1"
-            const val core = "org.jetbrains.exposed:exposed-core:$version"
-            const val jdbc = "org.jetbrains.exposed:exposed-jdbc:$version"
-            const val dao = "org.jetbrains.exposed:exposed-dao:$version"
-            const val javaTime = "org.jetbrains.exposed:exposed-java-time:$version"
-            const val kotlinTime = "org.jetbrains.exposed:exposed-kotlin-datetime:$version"
+        object MongoDb {
+            const val bsonKotlinX = "org.mongodb:bson-kotlinx:5.2.0"
+            const val driverCoroutine = "org.mongodb:mongodb-driver-kotlin-coroutine:5.2.0"
         }
     }
 
     object Utils {
-        const val lombok = "org.projectlombok:lombok"
-        const val fasterXmlJacksonModule = "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9"
-
         private const val logbackVersion = "1.2.11"
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
 
         const val dotenv = "io.github.cdimascio:dotenv-kotlin:6.4.1"
-
-        // Ref: https://github.com/marcelkliemannel/kotlin-onetimepassword
-        const val otpGenerator = "dev.turingcomplete:kotlin-onetimepassword:2.4.0"
 
         // detekt
         const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Plugins.Detekt.version}"
@@ -69,40 +51,38 @@ object Dependencies {
 
     object Kotlin {
         object X {
-            const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
-            const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC"
+            const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.1"
+            const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
         }
 
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.KotlinVersion}"
     }
 
     object Test {
-        const val mockK = "io.mockk:mockk:1.10.0"
+        const val mockK = "io.mockk:mockk:1.13.15"
         const val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.KotlinVersion}"
 
         object Jupiter {
             private const val version = "5.8.2"
+            const val test = "org.junit.jupiter:junit-jupiter:$version"
             const val engine = "org.junit.jupiter:junit-jupiter-engine:$version"
-            const val vintageEngine = "org.junit.vintage:junit-vintage-engine"
             const val api = "org.junit.jupiter:junit-jupiter-api:$version"
         }
 
         object Spek {
             private const val version = "2.0.19"
             const val dslJvm = "org.spekframework.spek2:spek-dsl-jvm:$version"
-            const val subjectExt = "org.jetbrains.spek:spek-subject-extension:$version"
-            const val runnerJunit5 = "org.spekframework.spek2:spek-runner-junit5:$version"
         }
 
         object TestContainers {
-            private const val version = "1.18.0"
+            private const val version = "1.20.3"
             const val junitJupiter = "org.testcontainers:junit-jupiter:$version"
-            const val postgresql = "org.testcontainers:postgresql:$version"
+            const val mongodb = "org.testcontainers:mongodb:$version"
         }
     }
 
     object Telemetry {
-        private const val prometheusVersion = "1.6.3"
+        private const val prometheusVersion = "1.14.1"
         const val micrometerRegistryPrometheus = "io.micrometer:micrometer-registry-prometheus:$prometheusVersion"
     }
 }
