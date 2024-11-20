@@ -1,10 +1,6 @@
 package com.rusticfox.fingenius.datastore
 
-import com.rusticfox.fingenius.core.entities.OtpCode
-import com.rusticfox.fingenius.core.entities.UserId
-import com.rusticfox.fingenius.core.exceptions.DatabaseException
-import com.rusticfox.fingenius.core.exceptions.NotFoundException
-import com.rusticfox.fingenius.datastore.models.OtpEntity
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import io.mockk.coEvery
 import io.mockk.confirmVerified
 import io.mockk.coVerify
@@ -66,11 +62,11 @@ class OtpDatastoreImplTest {
             expiryTime = otpExpiryTime
         )
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
             OtpRepository.insert(any())
-        } returns mockOtpEntity
+        } returns mockInvoiceItemModel
 
         assertDoesNotThrow {
             runBlocking {
@@ -132,11 +128,11 @@ class OtpDatastoreImplTest {
             used = used
         )
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
             OtpRepository.findByCode(any())
-        } returns mockOtpEntity
+        } returns mockInvoiceItemModel
 
         coEvery {
             OtpRepository.markAsUsed(generatedCode)
@@ -170,11 +166,11 @@ class OtpDatastoreImplTest {
             used = used
         )
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
             OtpRepository.findByCode(any())
-        } returns mockOtpEntity
+        } returns mockInvoiceItemModel
 
         coEvery {
             OtpRepository.markAsUsed(any())
@@ -222,27 +218,27 @@ class OtpDatastoreImplTest {
         val expiryTime = LocalDateTime.now()
         val used = false
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
-            mockOtpEntity.code
+            mockInvoiceItemModel.code
         } returns code
 
         coEvery {
-            mockOtpEntity.used
+            mockInvoiceItemModel.used
         } returns used
 
         coEvery {
-            mockOtpEntity.userId
+            mockInvoiceItemModel.userId
         } returns userId.value
 
         coEvery {
-            mockOtpEntity.expiryTime
+            mockInvoiceItemModel.expiryTime
         } returns expiryTime
 
         coEvery {
             OtpRepository.findByCode(any())
-        } returns mockOtpEntity
+        } returns mockInvoiceItemModel
 
         val actual = assertDoesNotThrow {
             runBlocking {
@@ -269,25 +265,25 @@ class OtpDatastoreImplTest {
         val expiryTime = LocalDateTime.now()
         val used = false
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
-            mockOtpEntity.code
+            mockInvoiceItemModel.code
         } returns code
 
         coEvery {
-            mockOtpEntity.used
+            mockInvoiceItemModel.used
         } returns used
 
         coEvery {
-            mockOtpEntity.userId
+            mockInvoiceItemModel.userId
         } returns userId.value
 
         coEvery {
-            mockOtpEntity.expiryTime
+            mockInvoiceItemModel.expiryTime
         } returns expiryTime
 
-        val otpCodes = listOf(mockOtpEntity)
+        val otpCodes = listOf(mockInvoiceItemModel)
 
         coEvery {
             OtpRepository.findAll()
@@ -315,22 +311,22 @@ class OtpDatastoreImplTest {
         val expiryTime = LocalDateTime.now()
         val used = false
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
-            mockOtpEntity.code
+            mockInvoiceItemModel.code
         } returns code
 
         coEvery {
-            mockOtpEntity.used
+            mockInvoiceItemModel.used
         } returns used
 
         coEvery {
-            mockOtpEntity.userId
+            mockInvoiceItemModel.userId
         } returns userId.value
 
         coEvery {
-            mockOtpEntity.expiryTime
+            mockInvoiceItemModel.expiryTime
         } returns expiryTime
 
         coEvery {
@@ -357,22 +353,22 @@ class OtpDatastoreImplTest {
         val expiryTime = LocalDateTime.now()
         val used = false
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
-            mockOtpEntity.code
+            mockInvoiceItemModel.code
         } returns code
 
         coEvery {
-            mockOtpEntity.used
+            mockInvoiceItemModel.used
         } returns used
 
         coEvery {
-            mockOtpEntity.userId
+            mockInvoiceItemModel.userId
         } returns userId.value
 
         coEvery {
-            mockOtpEntity.expiryTime
+            mockInvoiceItemModel.expiryTime
         } returns expiryTime
 
         coEvery {
@@ -399,25 +395,25 @@ class OtpDatastoreImplTest {
         val expiryTime = LocalDateTime.now()
         val used = false
 
-        val mockOtpEntity = mockk<OtpEntity>(relaxed = true)
+        val mockInvoiceItemModel = mockk<InvoiceItemModel>(relaxed = true)
 
         coEvery {
-            mockOtpEntity.code
+            mockInvoiceItemModel.code
         } returns code
 
         coEvery {
-            mockOtpEntity.used
+            mockInvoiceItemModel.used
         } returns used
 
         coEvery {
-            mockOtpEntity.userId
+            mockInvoiceItemModel.userId
         } returns userId.value
 
         coEvery {
-            mockOtpEntity.expiryTime
+            mockInvoiceItemModel.expiryTime
         } returns expiryTime
 
-        val otpCodes = listOf(mockOtpEntity)
+        val otpCodes = listOf(mockInvoiceItemModel)
 
         coEvery {
             OtpRepository.findAllByUserId(any())

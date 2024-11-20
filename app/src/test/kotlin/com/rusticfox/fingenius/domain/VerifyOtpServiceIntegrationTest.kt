@@ -1,15 +1,8 @@
 package com.rusticfox.fingenius.domain
 
-import com.rusticfox.fingenius.core.entities.OtpCode
-import com.rusticfox.fingenius.core.entities.OtpVerificationStatus
-import com.rusticfox.fingenius.core.entities.UserId
-import com.rusticfox.fingenius.core.entities.VerifyOtpCode
-import com.rusticfox.fingenius.core.exceptions.NotFoundException
-import com.rusticfox.fingenius.core.ports.OtpDataStore
 import com.rusticfox.fingenius.datastore.OtpDatastoreImpl
 import com.rusticfox.fingenius.datastore.OtpRepository
-import com.rusticfox.fingenius.datastore.models.OtpEntity
-import com.rusticfox.fingenius.datastore.models.OtpTable
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import com.sanctumlabs.otp.domain.services.VerifyOtpServiceImpl
 import com.sanctumlabs.otp.testfixtures.utils.generateRandomString
 import kotlinx.coroutines.runBlocking
@@ -140,7 +133,7 @@ class VerifyOtpServiceIntegrationTest : BaseIntegrationTest(), KoinTest {
         assertEquals(actual, com.rusticfox.fingenius.core.entities.OtpVerificationStatus.VERIFIED)
 
         // check that we actually updated the OTP record
-        val updatedOtpRecord = transaction { OtpEntity.find { OtpTable.code eq code }.firstOrNull() }
+        val updatedOtpRecord = transaction { InvoiceItemModel.find { OtpTable.code eq code }.firstOrNull() }
 
         assertNotNull(updatedOtpRecord)
         assertEquals(updatedOtpRecord.code, code)

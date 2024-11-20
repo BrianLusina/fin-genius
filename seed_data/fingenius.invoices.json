@@ -1,0 +1,108 @@
+[{
+  "_id": "6520245dc69da443246bfbc0",
+  "type": "sales",
+  "invoiceDate": "2023-06-06",
+  "dueDate": "2023-06-11",
+  "invoiceNo": "SI-0001",
+  "partnerId": "652015568bcce03ba86d0927",
+  "creditTerm": "5",
+  "reference": "None",
+  "invoiceTotal": "2450",
+  "invoiceItems": [
+    {
+      "productName": "Battery-01",
+      "quantity": "2",
+      "rate": "100",
+      "valueOfSupplies": "200",
+      "salesTax": "0",
+      "netAmount": "200"
+    },
+    {
+      "productName": "NH-165",
+      "quantity": "5",
+      "rate": "300",
+      "valueOfSupplies": "1500",
+      "salesTax": "750",
+      "netAmount": "2250"
+    }
+  ]
+},
+{
+  "_id": "65239ad0cf2f1d465769fc93",
+  "type": "purchase",
+  "invoiceDate": "2023-10-09",
+  "dueDate": "2023-10-11",
+  "invoiceNo": "PI-0001",
+  "partnerId": "65239ab4cf2f1d465769fc92",
+  "creditTerm": "2",
+  "reference": "Purchase",
+  "invoiceTotal": "4700",
+  "invoiceItems": [
+    {
+      "productName": "NH-165",
+      "quantity": "10",
+      "rate": "300",
+      "valueOfSupplies": "3000",
+      "salesTax": "1500",
+      "netAmount": "4500"
+    },
+    {
+      "productName": "Battery-01",
+      "quantity": "2",
+      "rate": "100",
+      "valueOfSupplies": "200",
+      "salesTax": "0",
+      "netAmount": "200"
+    }
+  ]
+},
+{
+  "_id": "652cf84ce56d834f27e961f8",
+  "type": "sales",
+  "invoiceDate": "2023-10-16",
+  "dueDate": "2023-10-19",
+  "invoiceNo": "SI-0002",
+  "partnerId": "652cf6fce56d834f27e961f5",
+  "creditTerm": "3",
+  "reference": "Sales",
+  "invoiceTotal": "2150",
+  "invoiceItems": [
+    {
+      "productName": "Product 01",
+      "quantity": "4",
+      "rate": "200",
+      "valueOfSupplies": "800",
+      "salesTax": "0",
+      "netAmount": "800"
+    },
+    {
+      "productName": "Product 02",
+      "quantity": "3",
+      "rate": "300",
+      "valueOfSupplies": "900",
+      "salesTax": "450",
+      "netAmount": "1350"
+    }
+  ]
+},
+{
+  "_id": "653117690405e22fdc4954c7",
+  "type": "purchase",
+  "invoiceDate": "2023-10-19",
+  "dueDate": "2023-10-21",
+  "invoiceNo": "PI-0002",
+  "partnerId": "652cf742e56d834f27e961f6",
+  "creditTerm": "2",
+  "reference": "",
+  "invoiceTotal": "1350",
+  "invoiceItems": [
+    {
+      "productName": "Product 02",
+      "quantity": "3",
+      "rate": "300",
+      "valueOfSupplies": "900",
+      "salesTax": "450",
+      "netAmount": "1350"
+    }
+  ]
+}]

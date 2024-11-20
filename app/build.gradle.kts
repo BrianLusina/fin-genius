@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id(Plugins.KotlinSerialization) version Versions.KotlinVersion
+    id(Plugins.KotlinSerialization.plugin) version Plugins.KotlinSerialization.version
     id(Plugins.Ktor.plugin) version Plugins.Ktor.version
 }
 
@@ -47,7 +47,7 @@ dependencies {
     implementation(Dependencies.Utils.logbackClassic)
 
     testImplementation(testFixtures(project(":libs:testfixtures")))
-    testImplementation(Dependencies.Ktor.serverTests)
+    testImplementation(Dependencies.Ktor.serverTestHost)
     testImplementation(Dependencies.Ktor.serverContentNegotiation)
     testImplementation(Dependencies.Ktor.clientContentNegotiation)
     testImplementation(Dependencies.DI.koinTest)

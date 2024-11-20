@@ -1,0 +1,20 @@
+[{
+  "_id": "652016e143925407503f9021",
+  "name": "Product 01",
+  "coreCompany": "CC 01",
+  "rate": "200",
+  "status": "Active",
+  "taxExempted": "Yes",
+  "salesTax": "0",
+  "notes": ""
+},
+{
+  "_id": "6520243dc69da443246bfbbf",
+  "name": "Product 02",
+  "coreCompany": "CC 02",
+  "rate": "300",
+  "status": "Active",
+  "taxExempted": "No",
+  "salesTax": "50",
+  "notes": ""
+}]

@@ -1,12 +1,8 @@
 package com.rusticfox.fingenius.domain.tbotp
 
-import com.rusticfox.fingenius.core.entities.UserId
-import com.rusticfox.fingenius.core.ports.OtpDataStore
-import com.rusticfox.fingenius.core.services.OtpCodeGenerator
 import com.rusticfox.fingenius.datastore.OtpDatastoreImpl
 import com.rusticfox.fingenius.datastore.OtpRepository
-import com.rusticfox.fingenius.datastore.models.OtpEntity
-import com.rusticfox.fingenius.datastore.models.OtpTable
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import com.sanctumlabs.otp.domain.BaseIntegrationTest
 import com.sanctumlabs.otp.domain.generators.HmacAlgorithms
 import com.sanctumlabs.otp.domain.generators.TimeBasedCodeGeneratorConfig
@@ -76,7 +72,7 @@ class CreateOtpServiceIntegrationTest : BaseIntegrationTest(), KoinTest {
             }
         }
 
-        val actual = transaction { OtpEntity.find { OtpTable.userId eq user }.firstOrNull() }
+        val actual = transaction { InvoiceItemModel.find { OtpTable.userId eq user }.firstOrNull() }
 
         assertNotNull(actual)
         assertEquals(actual.code.length, codeDigits)

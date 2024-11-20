@@ -1,6 +1,6 @@
 package com.rusticfox.fingenius.di
 
-import com.sanctumlabs.otp.config.Config
+import com.rusticfox.fingenius.config.Config
 import com.rusticfox.fingenius.core.ports.OtpDataStore
 import com.rusticfox.fingenius.datastore.DatabaseFactory
 import com.rusticfox.fingenius.datastore.DatabaseParams
@@ -16,8 +16,6 @@ interface DatabaseConfig {
     val name: String
     val username: String
     val password: String
-    val driver: String
-    val driverClass: String
     val url: String
 }
 
@@ -33,8 +31,6 @@ class DatabaseConfigImpl : DatabaseConfig, KoinComponent {
 
     override val username: String = config.getPropertyOrThrow("database.username")
     override val password: String = config.getPropertyOrThrow("database.password")
-    override val driver: String = config.getPropertyOrThrow("database.driver")
-    override val driverClass: String = config.getPropertyOrThrow("database.driverClass")
 
     override val url = config.getProperty(
         "database.url", "jdbc:${config.getPropertyOrThrow("database.driver")}://" +
@@ -48,13 +44,12 @@ val databaseModule = module {
     val databaseConfig = DatabaseConfigImpl()
     DatabaseFactory.init(
         DatabaseParams(
-            driver = databaseConfig.driver,
             url = databaseConfig.url,
-            driverClass = databaseConfig.driverClass,
             username = databaseConfig.username,
-            password = databaseConfig.password
+            password = databaseConfig.password,
+            databaseName = databaseConfig.name
         )
     )
     single { OtpRepository }
-    single<com.rusticfox.fingenius.core.ports.OtpDataStore> { OtpDatastoreImpl(get()) }
+    single<OtpDataStore> { OtpDatastoreImpl(get()) }
 }

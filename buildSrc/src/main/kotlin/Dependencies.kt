@@ -18,7 +18,6 @@ object Dependencies {
 
         const val serializationJson = "io.ktor:ktor-serialization-kotlinx-json-jvm:$version"
 
-        const val serverTests = "io.ktor:ktor-server-tests-jvm:$version"
         const val serverTestHost = "io.ktor:ktor-server-test-host:$version"
     }
 
@@ -53,13 +52,14 @@ object Dependencies {
         object X {
             const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.1"
             const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+            const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
         }
 
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.KotlinVersion}"
     }
 
     object Test {
-        const val mockK = "io.mockk:mockk:1.13.15"
+        const val mockK = "io.mockk:mockk:1.13.13"
         const val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.KotlinVersion}"
 
         object Jupiter {

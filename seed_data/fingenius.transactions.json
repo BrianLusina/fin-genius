@@ -1,0 +1,40 @@
+[{
+  "_id": "65202be2c69da443246bfbc1",
+  "voucherNo": "RCT-0001",
+  "type": "BRV",
+  "date": "2023-10-06",
+  "paymentTo": "",
+  "receiptFrom": "652015568bcce03ba86d0927",
+  "amount": "500",
+  "reference": "Sales"
+},
+{
+  "_id": "652cf7cee56d834f27e961f7",
+  "voucherNo": "PMT-0001",
+  "type": "CPV",
+  "date": "2023-10-16",
+  "paymentTo": "65239ab4cf2f1d465769fc92",
+  "receiptFrom": "",
+  "amount": "300",
+  "reference": "Purchase"
+},
+{
+  "_id": "6531169e0405e22fdc4954c5",
+  "voucherNo": "RCT-0002",
+  "type": "CRV",
+  "date": "2023-10-19",
+  "paymentTo": "",
+  "receiptFrom": "652cf6fce56d834f27e961f5",
+  "amount": "100",
+  "reference": "Invoice"
+},
+{
+  "_id": "653117000405e22fdc4954c6",
+  "voucherNo": "PMT-0002",
+  "type": "BPV",
+  "date": "2023-10-19",
+  "paymentTo": "652cf742e56d834f27e961f6",
+  "receiptFrom": "",
+  "amount": "400",
+  "reference": "Invoice"
+}]

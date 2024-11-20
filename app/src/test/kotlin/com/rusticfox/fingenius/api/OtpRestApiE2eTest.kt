@@ -4,9 +4,7 @@ import com.rusticfox.fingenius.api.dto.OtpRequestDto
 import com.rusticfox.fingenius.api.dto.OtpResponseDto
 import com.rusticfox.fingenius.api.dto.OtpVerifyDto
 import com.rusticfox.fingenius.api.dto.OtpVerifyResponseDto
-import com.rusticfox.fingenius.core.entities.OtpVerificationStatus
-import com.rusticfox.fingenius.datastore.models.OtpEntity
-import com.rusticfox.fingenius.datastore.models.OtpTable
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import com.sanctumlabs.otp.di.apiModule
 import com.sanctumlabs.otp.di.configModule
 import com.sanctumlabs.otp.di.databaseModule
@@ -93,7 +91,7 @@ class OtpRestApiE2eTest : BaseIntegrationTest(), KoinTest {
             }
 
         // assert that an OTP code was created with the given user ID
-        val actual = transaction { OtpEntity.find { OtpTable.userId eq userId }.firstOrNull() }
+        val actual = transaction { InvoiceItemModel.find { OtpTable.userId eq userId }.firstOrNull() }
 
         assertNotNull(actual)
         assertEquals(actual.code.length, 6)
@@ -149,11 +147,11 @@ class OtpRestApiE2eTest : BaseIntegrationTest(), KoinTest {
                 assertNotNull(actual.expiryTime)
             }
 
-        val savedOtpEntity = transaction { OtpEntity.find { OtpTable.userId eq user }.firstOrNull() }
+        val savedInvoiceItemModel = transaction { InvoiceItemModel.find { OtpTable.userId eq user }.firstOrNull() }
 
-        assertNotNull(savedOtpEntity)
+        assertNotNull(savedInvoiceItemModel)
 
-        val actualCode = savedOtpEntity.code
+        val actualCode = savedInvoiceItemModel.code
         val request = OtpVerifyDto(userId = user, code = actualCode)
 
         testHttpClient
@@ -171,9 +169,9 @@ class OtpRestApiE2eTest : BaseIntegrationTest(), KoinTest {
                 assertEquals(com.rusticfox.fingenius.core.entities.OtpVerificationStatus.VERIFIED, actualResponse.status)
             }
 
-        val updatedOtpEntity = transaction { OtpEntity.find { OtpTable.userId eq user }.firstOrNull() }
+        val updatedInvoiceItemModel = transaction { InvoiceItemModel.find { OtpTable.userId eq user }.firstOrNull() }
 
-        assertNotNull(updatedOtpEntity)
-        assertEquals(true, updatedOtpEntity.used)
+        assertNotNull(updatedInvoiceItemModel)
+        assertEquals(true, updatedInvoiceItemModel.used)
     }
 }

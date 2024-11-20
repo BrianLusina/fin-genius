@@ -196,5 +196,6 @@ subprojects {
         testImplementation(Dependencies.Test.Jupiter.engine)
         testImplementation(Dependencies.Test.Spek.dslJvm)
         testImplementation(Dependencies.Kotlin.X.coroutinesCore)
+        testImplementation(Dependencies.Kotlin.X.serializationJson)
     }
 }

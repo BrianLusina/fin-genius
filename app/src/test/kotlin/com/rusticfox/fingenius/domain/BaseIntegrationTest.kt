@@ -2,7 +2,6 @@ package com.rusticfox.fingenius.domain
 
 import com.rusticfox.fingenius.datastore.DatabaseFactory
 import com.rusticfox.fingenius.datastore.DatabaseParams
-import com.rusticfox.fingenius.datastore.models.OtpTable
 import com.sanctumlabs.otp.testfixtures.extensions.DatabaseExtension
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER_CLASS

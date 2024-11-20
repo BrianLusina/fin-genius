@@ -1,9 +1,11 @@
 plugins {
     kotlin("jvm")
+    id(Plugins.KotlinSerialization.plugin)
 }
 
 dependencies {
     implementation(project(":app:core"))
+    implementation(Dependencies.Kotlin.X.serializationJson)
 
     implementation(Dependencies.Database.MongoDb.bsonKotlinX)
     implementation(Dependencies.Database.MongoDb.driverCoroutine)

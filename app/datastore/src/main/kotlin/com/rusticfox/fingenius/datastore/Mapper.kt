@@ -1,15 +1,13 @@
 package com.rusticfox.fingenius.datastore
 
-import com.rusticfox.fingenius.core.entities.OtpCode
-import com.rusticfox.fingenius.core.entities.UserId
-import com.rusticfox.fingenius.datastore.models.OtpEntity
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import kotlinx.datetime.toKotlinLocalDateTime
 
-fun mapModelToEntity(otpEntity: OtpEntity): com.rusticfox.fingenius.core.entities.OtpCode {
+fun mapModelToEntity(invoiceItemModel: InvoiceItemModel): com.rusticfox.fingenius.core.entities.OtpCode {
     return com.rusticfox.fingenius.core.entities.OtpCode(
-        code = otpEntity.code,
-        userId = com.rusticfox.fingenius.core.entities.UserId(otpEntity.userId),
-        expiryTime = otpEntity.expiryTime.toKotlinLocalDateTime(),
-        used = otpEntity.used
+        code = invoiceItemModel.code,
+        userId = com.rusticfox.fingenius.core.entities.UserId(invoiceItemModel.userId),
+        expiryTime = invoiceItemModel.expiryTime.toKotlinLocalDateTime(),
+        used = invoiceItemModel.used
     )
 }

@@ -7,7 +7,10 @@ object Plugins {
         const val plugin = "io.ktor.plugin"
     }
 
-    const val KotlinSerialization = "org.jetbrains.kotlin.plugin.serialization"
+    object KotlinSerialization {
+        const val version = "2.0.20"
+        const val plugin = "org.jetbrains.kotlin.plugin.serialization"
+    }
 
     const val Java = "java"
 

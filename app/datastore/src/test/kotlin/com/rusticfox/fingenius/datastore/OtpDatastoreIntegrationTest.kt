@@ -1,12 +1,7 @@
 package com.rusticfox.fingenius.datastore
 
-import com.rusticfox.fingenius.core.entities.OtpCode
-import com.rusticfox.fingenius.core.entities.UserId
-import com.rusticfox.fingenius.core.exceptions.DatabaseException
-import com.rusticfox.fingenius.core.exceptions.NotFoundException
 import com.sanctumlabs.otp.testfixtures.extensions.DatabaseExtension
-import com.rusticfox.fingenius.datastore.models.OtpEntity
-import com.rusticfox.fingenius.datastore.models.OtpTable
+import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER_CLASS
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_PASSWORD
@@ -102,7 +97,7 @@ class OtpDatastoreIntegrationTest : KoinTest {
         }
 
         // check that we actually created a record
-        val actual = transaction { OtpEntity.find { OtpTable.code eq code }.firstOrNull() }
+        val actual = transaction { InvoiceItemModel.find { OtpTable.code eq code }.firstOrNull() }
 
         assertNotNull(actual)
         assertEquals(actual.code, code)
@@ -178,7 +173,7 @@ class OtpDatastoreIntegrationTest : KoinTest {
         }
 
         // check that we actually updated the OTP record
-        val actual = transaction { OtpEntity.find { OtpTable.code eq code }.firstOrNull() }
+        val actual = transaction { InvoiceItemModel.find { OtpTable.code eq code }.firstOrNull() }
 
         assertNotNull(actual)
         assertEquals(actual.code, code)
