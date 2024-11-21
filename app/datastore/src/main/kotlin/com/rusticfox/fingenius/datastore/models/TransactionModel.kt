@@ -1,5 +1,6 @@
 package com.rusticfox.fingenius.datastore.models
 
+import com.rusticfox.fingenius.datastore.partner.PartnerModel
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.ExperimentalSerializationApi

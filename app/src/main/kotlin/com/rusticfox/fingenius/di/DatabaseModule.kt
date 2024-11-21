@@ -4,8 +4,8 @@ import com.rusticfox.fingenius.config.Config
 import com.rusticfox.fingenius.core.ports.OtpDataStore
 import com.rusticfox.fingenius.datastore.DatabaseFactory
 import com.rusticfox.fingenius.datastore.DatabaseParams
-import com.rusticfox.fingenius.datastore.OtpDatastoreImpl
-import com.rusticfox.fingenius.datastore.OtpRepository
+import com.rusticfox.fingenius.datastore.partner.PartnerDataStoreAdapter
+import com.rusticfox.fingenius.datastore.partner.PartnerRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.dsl.module
@@ -50,6 +50,6 @@ val databaseModule = module {
             databaseName = databaseConfig.name
         )
     )
-    single { OtpRepository }
-    single<OtpDataStore> { OtpDatastoreImpl(get()) }
+    single { PartnerRepository }
+    single<OtpDataStore> { PartnerDataStoreAdapter(get()) }
 }

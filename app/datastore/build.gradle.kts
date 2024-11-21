@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":app:core"))
+    implementation(project(":app:domain"))
     implementation(Dependencies.Kotlin.X.serializationJson)
 
     implementation(Dependencies.Database.MongoDb.bsonKotlinX)

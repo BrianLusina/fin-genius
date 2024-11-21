@@ -1,7 +1,5 @@
 package com.rusticfox.fingenius.domain.generators
 
-import com.rusticfox.fingenius.core.services.GeneratedOtpCode
-import com.rusticfox.fingenius.core.services.OtpCodeGenerator
 import dev.turingcomplete.kotlinonetimepassword.HmacAlgorithm
 import dev.turingcomplete.kotlinonetimepassword.HmacOneTimePasswordConfig
 import dev.turingcomplete.kotlinonetimepassword.HmacOneTimePasswordGenerator
@@ -20,9 +18,9 @@ data class HmacCodeGeneratorConfig(
 class HmacBasedCodeGenerator(
     private val key: String,
     private val config: com.rusticfox.fingenius.domain.generators.HmacCodeGeneratorConfig
-) : com.rusticfox.fingenius.core.services.OtpCodeGenerator {
+) : com.rusticfox.fingenius.core.usecases.OtpCodeGenerator {
 
-    override fun generate(value: String): com.rusticfox.fingenius.core.services.GeneratedOtpCode {
+    override fun generate(value: String): com.rusticfox.fingenius.core.usecases.GeneratedOtpCode {
         val hmacConfig = HmacOneTimePasswordConfig(
             codeDigits = config.codeDigits,
             hmacAlgorithm = when (config.hmacAlgorithm) {
@@ -52,7 +50,7 @@ class HmacBasedCodeGenerator(
             calendar.get(Calendar.MINUTE)
         ).toKotlinLocalDateTime()
 
-        return com.rusticfox.fingenius.core.services.GeneratedOtpCode(
+        return com.rusticfox.fingenius.core.usecases.GeneratedOtpCode(
             code = otpCode,
             expiryTime = expiryTime
         )

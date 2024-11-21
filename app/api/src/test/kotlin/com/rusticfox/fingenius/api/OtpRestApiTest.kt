@@ -2,9 +2,7 @@ package com.rusticfox.fingenius.api
 
 import com.rusticfox.fingenius.api.dto.OtpRequestDto
 import com.rusticfox.fingenius.api.dto.OtpVerifyDto
-import com.rusticfox.fingenius.core.entities.OtpCode
-import com.rusticfox.fingenius.core.entities.OtpVerificationStatus
-import com.rusticfox.fingenius.core.entities.UserId
+import com.rusticfox.fingenius.api.partner.PartnerService
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -33,14 +31,14 @@ import org.koin.test.KoinTest
 
 @Tag("unit")
 class OtpRestApiTest : KoinTest {
-    private val mockOtpService = mockk<OtpService>()
+    private val mockPartnerService = mockk<PartnerService>()
 
     @BeforeEach
     fun before() {
         startKoin {
             modules(
                 module {
-                    single { mockOtpService }
+                    single { mockPartnerService }
                 }
             )
         }
@@ -77,7 +75,7 @@ class OtpRestApiTest : KoinTest {
         )
 
         coEvery {
-            mockOtpService.generateOtp(any())
+            mockPartnerService.createPartner(any())
         } returns otpCode
 
         val expectedResponse = """
@@ -98,10 +96,10 @@ class OtpRestApiTest : KoinTest {
             }
 
         coVerify {
-            mockOtpService.generateOtp(otpRequestDto = request)
+            mockPartnerService.createPartner(otpRequestDto = request)
         }
 
-        confirmVerified(mockOtpService)
+        confirmVerified(mockPartnerService)
     }
 
     @Test
@@ -119,7 +117,7 @@ class OtpRestApiTest : KoinTest {
         val request = OtpRequestDto(userId)
 
         coEvery {
-            mockOtpService.generateOtp(any())
+            mockPartnerService.createPartner(any())
         } throws Exception("Failed to generated OTP code")
 
         val expectedResponse = """
@@ -138,10 +136,10 @@ class OtpRestApiTest : KoinTest {
             }
 
         coVerify {
-            mockOtpService.generateOtp(otpRequestDto = request)
+            mockPartnerService.createPartner(otpRequestDto = request)
         }
 
-        confirmVerified(mockOtpService)
+        confirmVerified(mockPartnerService)
     }
 
     @Test
@@ -161,7 +159,7 @@ class OtpRestApiTest : KoinTest {
         val verificationStatus = com.rusticfox.fingenius.core.entities.OtpVerificationStatus.VERIFIED
 
         coEvery {
-            mockOtpService.verifyOtp(any())
+            mockPartnerService.verifyOtp(any())
         } returns verificationStatus
 
         val expectedResponse = """
@@ -182,10 +180,10 @@ class OtpRestApiTest : KoinTest {
             }
 
         coVerify {
-            mockOtpService.verifyOtp(verifyOtpDto = request)
+            mockPartnerService.verifyOtp(verifyOtpDto = request)
         }
 
-        confirmVerified(mockOtpService)
+        confirmVerified(mockPartnerService)
     }
 
     @Test
@@ -205,7 +203,7 @@ class OtpRestApiTest : KoinTest {
 
         val errorMessage = "Failed to coVerify OTP code $code"
         coEvery {
-            mockOtpService.verifyOtp(any())
+            mockPartnerService.verifyOtp(any())
         } throws Exception(errorMessage)
 
         val expectedResponse = """
@@ -224,9 +222,9 @@ class OtpRestApiTest : KoinTest {
             }
 
         coVerify {
-            mockOtpService.verifyOtp(verifyOtpDto = request)
+            mockPartnerService.verifyOtp(verifyOtpDto = request)
         }
 
-        confirmVerified(mockOtpService)
+        confirmVerified(mockPartnerService)
     }
 }

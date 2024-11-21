@@ -1,7 +1,5 @@
 package com.rusticfox.fingenius.domain.generators
 
-import com.rusticfox.fingenius.core.services.GeneratedOtpCode
-import com.rusticfox.fingenius.core.services.OtpCodeGenerator
 import dev.turingcomplete.kotlinonetimepassword.GoogleAuthenticator
 import kotlinx.datetime.toKotlinLocalDateTime
 import java.time.LocalDateTime
@@ -11,9 +9,9 @@ import java.util.Date
 // number of seconds the current OTP is still valid
 private const val AMOUNT_TO_ADD_IN_SECONDS = 30
 
-class GoogleCodeGenerator(private val key: String) : com.rusticfox.fingenius.core.services.OtpCodeGenerator {
+class GoogleCodeGenerator(private val key: String) : com.rusticfox.fingenius.core.usecases.OtpCodeGenerator {
 
-    override fun generate(value: String): com.rusticfox.fingenius.core.services.GeneratedOtpCode {
+    override fun generate(value: String): com.rusticfox.fingenius.core.usecases.GeneratedOtpCode {
         val encodedSecret = key.toByteArray(Charsets.UTF_8)
 
         val currentTime = Date(System.currentTimeMillis())
@@ -34,7 +32,7 @@ class GoogleCodeGenerator(private val key: String) : com.rusticfox.fingenius.cor
             calendar.get(Calendar.MINUTE)
         ).toKotlinLocalDateTime()
 
-        return com.rusticfox.fingenius.core.services.GeneratedOtpCode(
+        return com.rusticfox.fingenius.core.usecases.GeneratedOtpCode(
             code = otpCode,
             expiryTime = expiryTime
         )

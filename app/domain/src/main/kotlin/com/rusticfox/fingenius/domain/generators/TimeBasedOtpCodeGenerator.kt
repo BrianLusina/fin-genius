@@ -1,7 +1,5 @@
 package com.rusticfox.fingenius.domain.generators
 
-import com.rusticfox.fingenius.core.services.GeneratedOtpCode
-import com.rusticfox.fingenius.core.services.OtpCodeGenerator
 import dev.turingcomplete.kotlinonetimepassword.HmacAlgorithm
 import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordConfig
 import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordGenerator
@@ -26,9 +24,9 @@ data class TimeBasedCodeGeneratorConfig(
 )
 
 class TimeBasedOtpCodeGenerator(private val key: String, private val config: TimeBasedCodeGeneratorConfig) :
-    com.rusticfox.fingenius.core.services.OtpCodeGenerator {
+    com.rusticfox.fingenius.core.usecases.OtpCodeGenerator {
 
-    override fun generate(value: String): com.rusticfox.fingenius.core.services.GeneratedOtpCode {
+    override fun generate(value: String): com.rusticfox.fingenius.core.usecases.GeneratedOtpCode {
         val (codeDigits, hmacAlgorithm, timeStep, timeStepUnit) = config
 
         val timeConfig = TimeBasedOneTimePasswordConfig(
@@ -65,7 +63,7 @@ class TimeBasedOtpCodeGenerator(private val key: String, private val config: Tim
             .ofInstant(endTimeSlot, ZoneId.systemDefault())
             .toKotlinLocalDateTime()
 
-        return com.rusticfox.fingenius.core.services.GeneratedOtpCode(
+        return com.rusticfox.fingenius.core.usecases.GeneratedOtpCode(
             code = otpCode,
             expiryTime = expiryTime
         )

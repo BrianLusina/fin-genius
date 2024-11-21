@@ -2,6 +2,8 @@ package com.rusticfox.fingenius.datastore
 
 import com.sanctumlabs.otp.testfixtures.extensions.DatabaseExtension
 import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
+import com.rusticfox.fingenius.datastore.partner.PartnerRepository
+import com.rusticfox.fingenius.datastore.partner.PartnerDataStoreAdapter
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_DRIVER_CLASS
 import com.sanctumlabs.otp.testfixtures.utils.DATABASE_PASSWORD
@@ -36,8 +38,8 @@ import kotlin.test.assertNotNull
 @Tag("integration")
 class OtpDatastoreIntegrationTest : KoinTest {
 
-    private val otpDatastore by inject<OtpDatastoreImpl>()
-    private val otpRepository by inject<OtpRepository>()
+    private val otpDatastore by inject<PartnerDataStoreAdapter>()
+    private val partnerRepository by inject<PartnerRepository>()
     private lateinit var database: Database
 
     @BeforeEach
@@ -65,14 +67,14 @@ class OtpDatastoreIntegrationTest : KoinTest {
     val koinTestExtension = KoinTestExtension.create {
         modules(
             module {
-                single { OtpRepository }
-                single { OtpDatastoreImpl(get()) }
+                single { PartnerRepository }
+                single { PartnerDataStoreAdapter(get()) }
             })
     }
 
     @Test
     fun `context is created for the test`() {
-        assertNotNull(otpRepository)
+        assertNotNull(partnerRepository)
         assertNotNull(otpDatastore)
     }
 
@@ -123,7 +125,7 @@ class OtpDatastoreIntegrationTest : KoinTest {
         // insert an existing record
         val savedOtpRecord = runBlocking {
             assertDoesNotThrow {
-                OtpRepository.insert(otpCode)
+                PartnerRepository.insert(otpCode)
             }
         }
         assertNotNull(savedOtpRecord)
@@ -156,7 +158,7 @@ class OtpDatastoreIntegrationTest : KoinTest {
         // insert an existing record
         val savedOtpRecord = runBlocking {
             assertDoesNotThrow {
-                OtpRepository.insert(otpCode)
+                PartnerRepository.insert(otpCode)
             }
         }
         assertNotNull(savedOtpRecord)
@@ -220,7 +222,7 @@ class OtpDatastoreIntegrationTest : KoinTest {
         // insert an existing record
         val savedOtpRecord = runBlocking {
             assertDoesNotThrow {
-                OtpRepository.insert(otpCode)
+                PartnerRepository.insert(otpCode)
             }
         }
         assertNotNull(savedOtpRecord)
@@ -279,8 +281,8 @@ class OtpDatastoreIntegrationTest : KoinTest {
         // insert record(s)
         runBlocking {
             assertDoesNotThrow {
-                OtpRepository.insert(otpCode1)
-                OtpRepository.insert(otpCode2)
+                PartnerRepository.insert(otpCode1)
+                PartnerRepository.insert(otpCode2)
             }
         }
 
@@ -338,8 +340,8 @@ class OtpDatastoreIntegrationTest : KoinTest {
         // insert record(s)
         runBlocking {
             assertDoesNotThrow {
-                OtpRepository.insert(otpCode1)
-                OtpRepository.insert(otpCode2)
+                PartnerRepository.insert(otpCode1)
+                PartnerRepository.insert(otpCode2)
             }
         }
 

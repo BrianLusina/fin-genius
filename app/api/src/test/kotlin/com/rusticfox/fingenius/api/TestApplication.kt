@@ -1,5 +1,6 @@
 package com.rusticfox.fingenius.api
 
+import com.rusticfox.fingenius.api.v1.otpApiRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install

@@ -1,15 +1,10 @@
 package com.rusticfox.fingenius.di
 
-import com.rusticfox.fingenius.core.services.CreateOtpService
-import com.rusticfox.fingenius.core.services.OtpCodeGenerator
-import com.rusticfox.fingenius.core.services.VerifyOtpService
 import com.sanctumlabs.otp.di.generators.GoogleOtpGeneratorConfigImpl
 import com.sanctumlabs.otp.di.generators.HmacOtpGeneratorConfigImpl
 import com.sanctumlabs.otp.di.generators.TimeOtpGeneratorConfigImpl
 import com.sanctumlabs.otp.domain.generators.GoogleCodeGenerator
 import com.sanctumlabs.otp.domain.generators.HmacAlgorithms
-import com.rusticfox.fingenius.domain.generators.HmacBasedCodeGenerator
-import com.rusticfox.fingenius.domain.generators.HmacCodeGeneratorConfig
 import com.sanctumlabs.otp.domain.generators.TimeBasedCodeGeneratorConfig
 import com.sanctumlabs.otp.domain.generators.TimeBasedOtpCodeGenerator
 import com.sanctumlabs.otp.domain.services.CreateOtpServiceImpl
@@ -39,19 +34,19 @@ val domainModule = module {
 
     val googleOtpGenConfig = GoogleOtpGeneratorConfigImpl()
 
-    single<com.rusticfox.fingenius.core.services.OtpCodeGenerator>(named(timeOtpCodeGenQualifierName)) {
+    single<com.rusticfox.fingenius.core.usecases.OtpCodeGenerator>(named(timeOtpCodeGenQualifierName)) {
         TimeBasedOtpCodeGenerator(
             timeOtpGenConfig.key,
             timeBasedCodeGenConfig
         )
     }
-    single<com.rusticfox.fingenius.core.services.OtpCodeGenerator>(named(hmacOtpCodeGenQualifierName)) {
+    single<com.rusticfox.fingenius.core.usecases.OtpCodeGenerator>(named(hmacOtpCodeGenQualifierName)) {
         com.rusticfox.fingenius.domain.generators.HmacBasedCodeGenerator(
             hmacOtpGenConfig.key,
             hmacCodeConfig
         )
     }
-    single<com.rusticfox.fingenius.core.services.OtpCodeGenerator>(named(googleOtpCodeGenQualifierName)) { GoogleCodeGenerator(googleOtpGenConfig.key) }
+    single<com.rusticfox.fingenius.core.usecases.OtpCodeGenerator>(named(googleOtpCodeGenQualifierName)) { GoogleCodeGenerator(googleOtpGenConfig.key) }
 
     var otpCodeGeneratorToUse = timeOtpCodeGenQualifierName
     if (timeOtpGenConfig.enabled) {
@@ -62,6 +57,6 @@ val domainModule = module {
         otpCodeGeneratorToUse = googleOtpCodeGenQualifierName
     }
 
-    single<com.rusticfox.fingenius.core.services.CreateOtpService> { CreateOtpServiceImpl(get(), get(qualifier = named(otpCodeGeneratorToUse))) }
-    single<com.rusticfox.fingenius.core.services.VerifyOtpService> { VerifyOtpServiceImpl(get()) }
+    single<com.rusticfox.fingenius.core.usecases.CreatePartnerUseCase> { CreateOtpServiceImpl(get(), get(qualifier = named(otpCodeGeneratorToUse))) }
+    single<com.rusticfox.fingenius.core.usecases.VerifyOtpService> { VerifyOtpServiceImpl(get()) }
 }
