@@ -43,6 +43,7 @@ object Dependencies {
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
 
         const val dotenv = "io.github.cdimascio:dotenv-kotlin:6.4.1"
+        const val ksuid = "com.github.ksuid:ksuid:1.1.3"
 
         // detekt
         const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Plugins.Detekt.version}"

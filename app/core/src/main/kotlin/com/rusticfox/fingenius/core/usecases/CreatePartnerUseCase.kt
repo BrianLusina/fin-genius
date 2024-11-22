@@ -6,6 +6,6 @@ import com.rusticfox.fingenius.core.interactor.UseCase
 /**
  * Generates an OTP code for given user
  */
-interface CreatePartnerUseCase: UseCase<Partner, Unit> {
-    override suspend operator fun invoke(request: Partner)
+interface CreatePartnerUseCase: UseCase<Partner, Partner> {
+    override suspend operator fun invoke(request: Partner): Partner
 }

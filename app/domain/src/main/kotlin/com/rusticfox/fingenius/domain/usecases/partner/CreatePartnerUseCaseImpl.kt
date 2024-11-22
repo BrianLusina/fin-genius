@@ -11,8 +11,8 @@ class CreatePartnerUseCaseImpl(
     private val dataStore: PartnerDataStorePort
 ) : CreatePartnerUseCase {
 
-    override suspend fun invoke(request: Partner) {
-        run {
+    override suspend fun invoke(request: Partner): Partner {
+        return run {
             dataStore.create(request)
         }
     }

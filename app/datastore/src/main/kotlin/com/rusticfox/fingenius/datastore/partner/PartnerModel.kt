@@ -1,5 +1,6 @@
 package com.rusticfox.fingenius.datastore.partner
 
+import com.rusticfox.fingenius.datastore.models.BaseModel
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -9,6 +10,7 @@ import java.math.BigDecimal
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class PartnerModel(
+    val partnerId: String? = null,
     @JsonNames("_id")
     val id: String? = null,
     val type: String,
@@ -23,4 +25,4 @@ data class PartnerModel(
     val repName: String,
     val repContact: String,
     val repDesignation: String
-)
+): BaseModel()
