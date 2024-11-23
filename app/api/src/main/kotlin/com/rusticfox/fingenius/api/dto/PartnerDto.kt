@@ -10,14 +10,12 @@ data class CreatePartnerRequestDto(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val status: String,
     val contactNo: String,
-    @Contextual
-    val openingBalance: BigDecimal,
     val address: String,
-    val repName: String,
-    val repContact: String,
-    val repDesignation: String
+    @Contextual
+    val representative: PartnerRepresentativeDto,
+    @Contextual
+    val openingBalance: BigDecimal = BigDecimal.valueOf(0)
 )
 
 @Serializable
@@ -32,10 +30,11 @@ data class PartnerResponseDto(
     val openingBalance: BigDecimal,
     val address: String,
     @Contextual
-    val representative: PartnerRepresentativeResponseDto,
+    val representative: PartnerRepresentativeDto,
 )
 
-data class PartnerRepresentativeResponseDto(
+@Serializable
+data class PartnerRepresentativeDto(
     val name: String,
     val contact: String,
     val designation: String

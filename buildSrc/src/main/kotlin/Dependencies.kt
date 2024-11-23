@@ -45,6 +45,8 @@ object Dependencies {
         const val dotenv = "io.github.cdimascio:dotenv-kotlin:6.4.1"
         const val ksuid = "com.github.ksuid:ksuid:1.1.3"
 
+        const val phoneLib = "com.googlecode.libphonenumber:libphonenumber:8.10.2"
+
         // detekt
         const val detektFormatting = "io.gitlab.arturbosch.detekt:detekt-formatting:${Plugins.Detekt.version}"
     }
@@ -52,8 +54,10 @@ object Dependencies {
     object Kotlin {
         object X {
             const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.1"
-            const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+            private const val coroutinesVersion = "1.8.1-Beta"
+            const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
             const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
+            const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
         }
 
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.KotlinVersion}"

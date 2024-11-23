@@ -5,15 +5,14 @@ import com.rusticfox.fingenius.core.usecases.CreatePartnerUseCase
 import com.rusticfox.fingenius.domain.port.outbound.datastore.PartnerDataStorePort
 
 /**
- * Creates partner code for given user
+ * Creates partner for given user
  */
-class CreatePartnerUseCaseImpl(
-    private val dataStore: PartnerDataStorePort
-) : CreatePartnerUseCase {
+class CreatePartnerUseCaseImpl(private val dataStore: PartnerDataStorePort): CreatePartnerUseCase {
 
     override suspend fun invoke(request: Partner): Partner {
-        return run {
-            dataStore.create(request)
-        }
+        return runCatching { dataStore.create(request) }
+            .getOrElse {
+                throw CreatePartnerException("Failed to create new partner $request", it)
+            }
     }
 }

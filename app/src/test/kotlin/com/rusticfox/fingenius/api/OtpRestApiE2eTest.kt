@@ -1,9 +1,5 @@
 package com.rusticfox.fingenius.api
 
-import com.rusticfox.fingenius.api.dto.OtpRequestDto
-import com.rusticfox.fingenius.api.dto.OtpResponseDto
-import com.rusticfox.fingenius.api.dto.OtpVerifyDto
-import com.rusticfox.fingenius.api.dto.OtpVerifyResponseDto
 import com.rusticfox.fingenius.datastore.models.InvoiceItemModel
 import com.sanctumlabs.otp.di.apiModule
 import com.sanctumlabs.otp.di.configModule

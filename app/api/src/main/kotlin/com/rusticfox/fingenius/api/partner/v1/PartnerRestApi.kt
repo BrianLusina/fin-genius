@@ -13,13 +13,25 @@ import org.koin.ktor.ext.inject
 fun Route.partnerV1ApiRoutes() {
     val partnerService: PartnerService by inject()
 
-    route("/api/v1/partner/otp") {
+    route("/api/v1/partner") {
         post<CreatePartnerRequestDto> { payload ->
             runCatching { partnerService.createPartner(payload) }
-                .onSuccess { call.respond(message = it, status = HttpStatusCode.Created) }
+                .onSuccess {
+                    call.respond(
+                        message = ApiResult(
+                            status = HttpStatusCode.Created.value,
+                            data = it,
+                            message = "Partner successfully created"
+                        ),
+                        status = HttpStatusCode.Created,
+                    )
+                }
                 .onFailure {
                     call.respond(
-                        message = ApiResult(message = it.message ?: "Failed to create OTP"),
+                        message = ApiResult(
+                            status = HttpStatusCode.InternalServerError.value,
+                            message = it.message ?: "Failed to create OTP"
+                        ),
                         status = HttpStatusCode.InternalServerError
                     )
                 }
