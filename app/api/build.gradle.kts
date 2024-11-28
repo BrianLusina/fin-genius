@@ -11,6 +11,9 @@ dependencies {
     implementation(Dependencies.Ktor.authJwt)
     implementation(Dependencies.Ktor.netty)
     implementation(Dependencies.Ktor.serializationJson)
+    implementation(Dependencies.Ktor.netty)
+    implementation(Dependencies.Ktor.defaultHeaders)
+    implementation(Dependencies.Ktor.openApi)
 
     implementation(Dependencies.Kotlin.X.datetime)
 

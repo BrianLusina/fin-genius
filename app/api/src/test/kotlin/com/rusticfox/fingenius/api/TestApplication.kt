@@ -4,9 +4,11 @@ import com.rusticfox.fingenius.api.partner.v1.partnerV1ApiRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.routing.routing
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation as ClientContentNegotiation
 import io.ktor.client.HttpClient
 import io.ktor.server.application.Application
+import io.ktor.server.routing.RoutingRoot
+import io.ktor.server.routing.routing
 import io.ktor.server.testing.testApplication
 import kotlinx.serialization.json.Json
 
@@ -16,6 +18,10 @@ fun Application.configureRouting() {
             prettyPrint = true
             isLenient = true
         })
+    }
+
+    install(RoutingRoot) {
+        partnerV1ApiRoutes()
     }
 
     routing {
@@ -41,7 +47,7 @@ fun customTestApplication(testBlock: suspend (httpClient: HttpClient) -> Unit) =
     }
 
     val testHttpClient = createClient {
-        install(plugin = io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+        install(plugin = ClientContentNegotiation) {
             json()
         }
     }

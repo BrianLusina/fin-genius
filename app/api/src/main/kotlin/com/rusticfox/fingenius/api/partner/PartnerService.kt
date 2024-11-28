@@ -1,7 +1,7 @@
 package com.rusticfox.fingenius.api.partner
 
-import com.rusticfox.fingenius.api.dto.CreatePartnerRequestDto
-import com.rusticfox.fingenius.api.dto.PartnerResponseDto
+import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRequestDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerResponseDto
 import com.rusticfox.fingenius.core.usecases.CreatePartnerUseCase
 
 class PartnerService(

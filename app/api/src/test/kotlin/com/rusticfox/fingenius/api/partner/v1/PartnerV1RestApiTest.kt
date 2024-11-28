@@ -1,11 +1,11 @@
 package com.rusticfox.fingenius.api.partner.v1
 
 import com.rusticfox.fingenius.api.customTestApplication
-import com.rusticfox.fingenius.api.dto.CreatePartnerRequestDto
-import com.rusticfox.fingenius.api.dto.PartnerRepresentativeDto
-import com.rusticfox.fingenius.api.dto.PartnerResponseDto
+import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRequestDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerResponseDto
 import com.rusticfox.fingenius.api.partner.PartnerService
-import io.ktor.client.call.*
+import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -47,7 +47,7 @@ class PartnerV1RestApiTest : KoinTest {
     }
 
     @Test
-    fun `should return created partner on successful request and creation of record`() = customTestApplication { testHttpClient ->
+    fun `should return the created partner on a successful request and creation of record`() = customTestApplication { testHttpClient ->
         val representative = PartnerRepresentativeDto(
             designation = "Rep",
             contact = "254744444444",
@@ -79,7 +79,7 @@ class PartnerV1RestApiTest : KoinTest {
             mockPartnerService.createPartner(any())
         } returns expectedResponse
 
-        testHttpClient.post("/api/v1/partner") {
+        testHttpClient.post("/api/v1/partner/") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }

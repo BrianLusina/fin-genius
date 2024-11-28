@@ -1,17 +1,14 @@
 package com.rusticfox.fingenius.api.partner
 
-import com.rusticfox.fingenius.api.dto.CreatePartnerRequestDto
-import com.rusticfox.fingenius.api.dto.PartnerRepresentativeDto
-import com.rusticfox.fingenius.api.dto.PartnerResponseDto
+import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRequestDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerResponseDto
 import com.rusticfox.fingenius.core.entities.Partner
 import com.rusticfox.fingenius.core.entities.PartnerRepresentative
-import com.rusticfox.fingenius.core.entities.PartnerStatus
 import com.rusticfox.fingenius.core.entities.PartnerType
-import com.rusticfox.fingenius.core.values.Amount
 import com.rusticfox.fingenius.core.values.Email
 import com.rusticfox.fingenius.core.values.Name
 import com.rusticfox.fingenius.core.values.PhoneNumber
-import java.util.*
 
 fun Partner.toPartnerResponseDto(): PartnerResponseDto {
     return PartnerResponseDto(
