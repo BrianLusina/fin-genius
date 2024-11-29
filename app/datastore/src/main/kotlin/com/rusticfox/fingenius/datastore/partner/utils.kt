@@ -3,20 +3,28 @@ package com.rusticfox.fingenius.datastore.partner
 import com.rusticfox.fingenius.core.entities.Partner
 import com.rusticfox.fingenius.core.entities.PartnerId
 import com.rusticfox.fingenius.core.entities.PartnerRepresentative
+import com.rusticfox.fingenius.core.values.Amount
+import com.rusticfox.fingenius.core.values.Email
+import com.rusticfox.fingenius.core.values.Name
+import com.rusticfox.fingenius.core.values.PhoneNumber
+import java.util.Currency
 
 fun Partner.toPartnerModel(): PartnerModel {
     return PartnerModel(
         type = type,
-        firstName = firstName,
-        lastName = lastName,
-        email = email,
+        firstName = firstName.value,
+        lastName = lastName.value,
+        email = email.value,
         status = status,
-        contactNo = contactNo,
-        openingBalance = openingBalance,
+        contactNo = contactNo.value,
+        currency = openingBalance.currency.currencyCode,
+        openingBalance = openingBalance.value,
         address = address,
-        repName = representative.name,
-        repDesignation = representative.designation,
-        repContact = representative.contact
+        representative = PartnerRepresentativeModel(
+            name = representative.name.value,
+            designation = representative.designation,
+            contact = representative.contact.value
+        ),
     )
 }
 
@@ -24,36 +32,17 @@ fun PartnerModel.toPartner(): Partner {
     return Partner(
         partnerId = partnerId?.let { PartnerId(it) } ?: PartnerId(),
         type = type,
-        firstName = firstName,
-        lastName = lastName,
-        email = email,
+        firstName = Name(firstName),
+        lastName = Name(lastName),
+        email = Email(email),
         status = status,
-        contactNo = contactNo,
-        openingBalance = openingBalance,
+        contactNo = PhoneNumber(contactNo),
+        openingBalance = Amount(currency= Currency.getInstance(currency), value = openingBalance),
         address = address,
         representative = PartnerRepresentative(
-            name = repName,
-            designation=repDesignation,
-            contact=repContact
-        )
-    )
-}
-
-fun mapToPartner(model: PartnerModel): Partner {
-    return Partner(
-        partnerId = model.partnerId?.let { PartnerId(it) } ?: PartnerId(),
-        type = model.type,
-        firstName = model.firstName,
-        lastName = model.lastName,
-        email = model.email,
-        status = model.status,
-        contactNo = model.contactNo,
-        openingBalance = model.openingBalance,
-        address = model.address,
-        representative = PartnerRepresentative(
-            name = model.repName,
-            designation = model.repDesignation,
-            contact = model.repContact
+            name = Name(representative.name),
+            designation = representative.designation,
+            contact = PhoneNumber(representative.contact)
         )
     )
 }

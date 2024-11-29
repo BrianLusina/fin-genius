@@ -9,6 +9,7 @@ import java.util.Currency
  * @param value [BigDecimal] the actual amount of the amount
  */
 data class Amount(val currency: Currency, val value: BigDecimal) : Comparable<Amount> {
+
     operator fun minus(other: Amount): Amount {
         // ensure that the other amount is of the same currency
         isOfSameCurrency(other.currency)

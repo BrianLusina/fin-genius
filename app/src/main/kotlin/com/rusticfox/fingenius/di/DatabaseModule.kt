@@ -1,11 +1,15 @@
 package com.rusticfox.fingenius.di
 
 import com.rusticfox.fingenius.config.Config
-import com.rusticfox.fingenius.core.ports.OtpDataStore
 import com.rusticfox.fingenius.datastore.DatabaseFactory
-import com.rusticfox.fingenius.datastore.DatabaseParams
+import com.rusticfox.fingenius.datastore.MongoDatabaseParams
 import com.rusticfox.fingenius.datastore.partner.PartnerDataStoreAdapter
+import com.rusticfox.fingenius.datastore.partner.PartnerReadDataStoreAdapter
 import com.rusticfox.fingenius.datastore.partner.PartnerRepository
+import com.rusticfox.fingenius.datastore.partner.PartnerWriteDataStoreAdapter
+import com.rusticfox.fingenius.domain.port.outbound.datastore.PartnerDataStorePort
+import com.rusticfox.fingenius.domain.port.outbound.datastore.PartnerReadDataStorePort
+import com.rusticfox.fingenius.domain.port.outbound.datastore.PartnerWriteDataStorePort
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.dsl.module
@@ -42,14 +46,16 @@ class DatabaseConfigImpl : DatabaseConfig, KoinComponent {
 
 val databaseModule = module {
     val databaseConfig = DatabaseConfigImpl()
-    DatabaseFactory.init(
-        DatabaseParams(
+    DatabaseFactory.mongoDatabase(
+        MongoDatabaseParams(
             url = databaseConfig.url,
             username = databaseConfig.username,
             password = databaseConfig.password,
-            databaseName = databaseConfig.name
+            name = databaseConfig.name
         )
     )
-    single { PartnerRepository }
-    single<OtpDataStore> { PartnerDataStoreAdapter(get()) }
+    single { PartnerRepository(get()) }
+    single<PartnerWriteDataStorePort> { PartnerWriteDataStoreAdapter(get()) }
+    single<PartnerReadDataStorePort> { PartnerReadDataStoreAdapter(get()) }
+    single<PartnerDataStorePort> { PartnerDataStoreAdapter(get(), get(), get()) }
 }

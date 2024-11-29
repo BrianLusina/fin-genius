@@ -11,6 +11,6 @@ class PartnerDataStoreAdapter(
 ) : PartnerDataStorePort, PartnerReadDataStorePort by readStore, PartnerWriteDataStorePort by writeStore {
 
     override suspend fun exists(id: String): Boolean {
-        TODO("Not yet implemented")
+        return repository.findById(id) != null
     }
 }

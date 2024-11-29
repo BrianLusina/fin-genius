@@ -1,9 +1,20 @@
 package com.rusticfox.fingenius.datastore
 
-data class DatabaseParams(
-    val url: String,
-    val databaseName: String,
-    val username: String,
-    val password: String,
-    val cleanDB: Boolean = false,
-)
+sealed interface DatabaseParams {
+    val name: String
+    val username: String
+    val password: String
+}
+
+sealed interface MongoDatabaseParams: DatabaseParams {
+    override val name: String
+    override val username: String
+    override val password: String
+}
+
+data class MongoDatabaseSettingsParams(
+    override val name: String,
+    override val username: String,
+    override val password: String,
+    val hosts: List<String> = emptyList()
+): MongoDatabaseParams

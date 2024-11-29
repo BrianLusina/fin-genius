@@ -1,12 +1,31 @@
 package com.rusticfox.fingenius.datastore
 
+import com.mongodb.MongoClientSettings
+import com.mongodb.ServerAddress
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 
 object DatabaseFactory {
-    fun init(config: DatabaseParams): MongoDatabase {
+
+    fun mongoDatabase(config: DatabaseParams): MongoDatabase {
         val mongoClient = MongoClient.create(config.url)
-        val database = mongoClient.getDatabase(config.databaseName)
+        val database = mongoClient.getDatabase(config.name)
+        return database
+    }
+
+    fun mongoDatabase(config: MongoDatabaseParams): MongoDatabase {
+        val serverAddresses = config.hosts.map {
+            val (host, port) = it.split(":")
+            ServerAddress(host, port.toInt())
+        }
+
+        val settings = MongoClientSettings
+            .builder()
+            .applyToClusterSettings { it.hosts(serverAddresses) }
+            .build()
+
+        val mongoClient = MongoClient.create(settings)
+        val database = mongoClient.getDatabase(config.name)
         return database
     }
 }
