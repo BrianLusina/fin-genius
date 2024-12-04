@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PartnerResponseDto(
+    val id: String,
     val type: String,
     val firstName: String,
     val lastName: String,
@@ -16,5 +17,5 @@ data class PartnerResponseDto(
     val openingBalance: BigDecimalJson,
     val address: String,
     @Contextual
-    val representative: PartnerRepresentativeDto,
+    val representative: PartnerRepresentativeResponseDto,
 )

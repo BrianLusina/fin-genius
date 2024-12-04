@@ -1,10 +1,12 @@
 package com.rusticfox.fingenius.api.partner.v1
 
 import com.rusticfox.fingenius.api.customTestApplication
-import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRequestDto
-import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeDto
+import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRepresentativeDto
 import com.rusticfox.fingenius.api.partner.dto.PartnerResponseDto
 import com.rusticfox.fingenius.api.partner.PartnerService
+import com.rusticfox.fingenius.api.partner.dto.PartnerDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeResponseDto
+import com.rusticfox.fingenius.api.serializers.OptionalProperty
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -48,19 +50,37 @@ class PartnerV1RestApiTest : KoinTest {
 
     @Test
     fun `should return the created partner on a successful request and creation of record`() = customTestApplication { testHttpClient ->
-        val representative = PartnerRepresentativeDto(
+
+        val partnerType = "vendor"
+        val firstName = "Sly"
+        val lastName = "Wolf"
+        val email = "sly@wolf.com"
+        val contactNo = "254722222222"
+        val address = "FoxHole"
+        val repDesignation = "Rep"
+        val repContact = "254744444444"
+        val repName = "Jon"
+
+        val payload = """
+            {
+                "type": "$partnerType",
+                "firstName": "$firstName",
+                "lastName": "$lastName",
+                "email": "$email",
+                "contactNo": "$contactNo",
+                "address" = "$address",
+                "representative": {
+                    "designation": "$repDesignation",
+                    "contact": "$repContact",
+                    "name": "$repName"
+                }
+            }
+        """.trimIndent()
+
+        val representative = PartnerRepresentativeResponseDto(
             designation = "Rep",
             contact = "254744444444",
             name = "Jon",
-        )
-        val request = CreatePartnerRequestDto(
-            type="vendor",
-            firstName = "Sly",
-            lastName = "Wolf",
-            email = "sly@wolf.com",
-            contactNo = "254722222222",
-            address = "FoxHole",
-            representative = representative
         )
 
         val expectedResponse = PartnerResponseDto(
@@ -72,7 +92,8 @@ class PartnerV1RestApiTest : KoinTest {
             address = "FoxHole",
             representative = representative,
             openingBalance = BigDecimal(0),
-            status = "active"
+            status = "active",
+            id = ""
         )
 
         coEvery {
@@ -81,7 +102,7 @@ class PartnerV1RestApiTest : KoinTest {
 
         testHttpClient.post("/api/v1/partner/") {
             contentType(ContentType.Application.Json)
-            setBody(request)
+            setBody(payload)
         }
             .apply {
                 assertEquals(HttpStatusCode.Created, status)

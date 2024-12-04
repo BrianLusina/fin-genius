@@ -1,7 +1,7 @@
 package com.rusticfox.fingenius.api.partner
 
-import com.rusticfox.fingenius.api.partner.dto.CreatePartnerRequestDto
-import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerDto
+import com.rusticfox.fingenius.api.partner.dto.PartnerRepresentativeResponseDto
 import com.rusticfox.fingenius.api.partner.dto.PartnerResponseDto
 import com.rusticfox.fingenius.core.entities.Partner
 import com.rusticfox.fingenius.core.entities.PartnerRepresentative
@@ -12,6 +12,7 @@ import com.rusticfox.fingenius.core.values.PhoneNumber
 
 fun Partner.toPartnerResponseDto(): PartnerResponseDto {
     return PartnerResponseDto(
+        id = identifier,
         type = type.name,
         firstName = firstName.value,
         lastName = lastName.value,
@@ -20,7 +21,7 @@ fun Partner.toPartnerResponseDto(): PartnerResponseDto {
         contactNo = contactNo.value,
         openingBalance = openingBalance.value,
         address = address,
-        representative = PartnerRepresentativeDto(
+        representative = PartnerRepresentativeResponseDto(
             name = representative.name.value,
             contact = representative.contact.value,
             designation = representative.designation
@@ -28,14 +29,14 @@ fun Partner.toPartnerResponseDto(): PartnerResponseDto {
     )
 }
 
-fun CreatePartnerRequestDto.toPartner(): Partner {
+fun PartnerDto.toPartner(): Partner {
     return Partner(
-        type = PartnerType.valueOf(type),
-        firstName = Name(firstName),
-        lastName = Name(lastName),
-        email = Email(email),
-        contactNo = PhoneNumber(contactNo),
-        address = address,
+        type = PartnerType.valueOf(type.toString()),
+        firstName = Name(firstName.toString()),
+        lastName = Name(lastName.toString()),
+        email = Email(email.toString()),
+        contactNo = PhoneNumber(contactNo.toString()),
+        address = address.toString(),
         representative = PartnerRepresentative(
             name = Name(representative.name),
             contact = PhoneNumber(representative.contact),

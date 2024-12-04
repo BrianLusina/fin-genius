@@ -10,6 +10,7 @@ fun Application.configureSerializationPlugin() {
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true
+            encodeDefaults = false
         })
     }
 }

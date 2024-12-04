@@ -1,7 +1,7 @@
 package com.rusticfox.fingenius
 
-import com.sanctumlabs.otp.di.modules
-import com.sanctumlabs.otp.plugins.plugins
+import com.rusticfox.fingenius.di.modules
+import com.rusticfox.fingenius.plugins.plugins
 import io.ktor.server.application.Application
 import io.ktor.server.netty.EngineMain
 

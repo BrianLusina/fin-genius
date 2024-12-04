@@ -17,6 +17,7 @@ fun Application.configureRouting() {
         json(Json {
             prettyPrint = true
             isLenient = true
+            encodeDefaults = false
         })
     }
 

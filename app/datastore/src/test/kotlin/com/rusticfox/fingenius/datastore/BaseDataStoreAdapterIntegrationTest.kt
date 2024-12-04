@@ -17,11 +17,11 @@ abstract class BaseDataStoreAdapterIntegrationTest : KoinTest {
     @BeforeEach
     fun setup() {
         mongoDatabase = DatabaseFactory.mongoDatabase(
-            MongoDatabaseSettingsParams(
+            MongoDatabaseParams(
+                url = MONGO_DATABASE_URL,
                 name = MONGO_DATABASE_NAME,
                 username = MONGO_DATABASE_USERNAME,
                 password = MONGO_DATABASE_PASSWORD,
-                hosts = listOf()
             )
         )
     }

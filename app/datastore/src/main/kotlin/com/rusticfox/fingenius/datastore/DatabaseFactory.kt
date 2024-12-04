@@ -7,13 +7,13 @@ import com.mongodb.kotlin.client.coroutine.MongoDatabase
 
 object DatabaseFactory {
 
-    fun mongoDatabase(config: DatabaseParams): MongoDatabase {
+    fun mongoDatabase(config: MongoDatabaseParams): MongoDatabase {
         val mongoClient = MongoClient.create(config.url)
         val database = mongoClient.getDatabase(config.name)
         return database
     }
 
-    fun mongoDatabase(config: MongoDatabaseParams): MongoDatabase {
+    fun mongoDatabase(config: MongoDatabaseSettingsParams): MongoDatabase {
         val serverAddresses = config.hosts.map {
             val (host, port) = it.split(":")
             ServerAddress(host, port.toInt())
