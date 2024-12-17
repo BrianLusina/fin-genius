@@ -22,8 +22,12 @@ class PartnerWriteDataStoreAdapter(
             .getOrElse { throw DatabaseException("Failed to create partner $data", it) }
     }
 
-    override suspend fun update(data: Partner): Partner {
-        TODO("Not yet implemented")
+    override suspend fun update(data: Partner): Partner = withContext(coroutineDispatcher) {
+        runCatching {
+            async { repository.update(data) }.await()
+            data
+        }
+            .getOrElse { throw DatabaseException("Failed to update parter $data", it) }
     }
 
     override suspend fun delete(id: String) {

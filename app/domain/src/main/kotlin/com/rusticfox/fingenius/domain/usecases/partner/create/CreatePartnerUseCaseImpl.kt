@@ -1,4 +1,4 @@
-package com.rusticfox.fingenius.domain.usecases.partner
+package com.rusticfox.fingenius.domain.usecases.partner.create
 
 import com.rusticfox.fingenius.core.entities.Partner
 import com.rusticfox.fingenius.core.usecases.CreatePartnerUseCase

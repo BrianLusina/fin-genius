@@ -9,7 +9,7 @@ import com.rusticfox.fingenius.core.values.Email
 import com.rusticfox.fingenius.core.values.Name
 import com.rusticfox.fingenius.core.values.PhoneNumber
 import com.rusticfox.fingenius.domain.port.outbound.datastore.PartnerDataStorePort
-import com.rusticfox.fingenius.domain.usecases.partner.CreatePartnerUseCaseImpl
+import com.rusticfox.fingenius.domain.usecases.partner.create.CreatePartnerUseCaseImpl
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

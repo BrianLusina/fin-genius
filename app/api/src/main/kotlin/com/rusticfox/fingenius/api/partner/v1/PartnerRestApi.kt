@@ -36,19 +36,17 @@ fun Route.partnerV1ApiRoutes() {
         }
 
         put<PartnerDto> ("/{id}") { payload ->
-            val partnerId = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest, "Missing IDÒ")
+            val partnerId = call.parameters["id"] ?: return@put call.respond(HttpStatusCode.BadRequest, "Missing partner ID")
 
-            runCatching {
-                partnerService.createPartner(payload)
-            }
+            runCatching { partnerService.updatePartner(partnerId, payload) }
                 .onSuccess {
                     call.respond(
                         message = ApiResult(
                             status = HttpStatusCode.Created.value,
                             data = it,
-                            message = "Partner successfully created"
+                            message = "Partner successfully updated"
                         ),
-                        status = HttpStatusCode.Created,
+                        status = HttpStatusCode.OK,
                     )
                 }
                 .onFailure {
