@@ -29,8 +29,42 @@ paths:
   # Get Invoices
   # Add Invoice
   /partners:
-  # Get Partner(s)
-  # Add Partner
+    post:
+      description: "Route to add a partner"
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/Partner"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "500":
+          description: "Internal Server Error"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Invalid input data format."
   # Edit Partner
 components:
   schemas:
