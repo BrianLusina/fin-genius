@@ -1,4 +1,4 @@
-package com.rusticfox.fingenius.domain.usecases.partner.edit
+package com.rusticfox.fingenius.domain.usecases.partner
 
 import com.rusticfox.fingenius.core.entities.Partner
 import com.rusticfox.fingenius.core.usecases.UpdatePartnerRequest
@@ -14,7 +14,7 @@ class UpdatePartnerUseCaseImpl(
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default
 ): UpdatePartnerUseCase {
 
-    override suspend fun invoke(request: UpdatePartnerRequest): Partner  = withContext(coroutineDispatcher) {
+    override suspend fun invoke(request: UpdatePartnerRequest): Partner = withContext(coroutineDispatcher) {
         val maybeExistingPartner = runCatching {
             val partner = async { dataStore.findById(request.partnerId.id) }
             partner.await()

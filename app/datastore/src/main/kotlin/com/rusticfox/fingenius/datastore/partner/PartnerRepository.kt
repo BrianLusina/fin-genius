@@ -36,6 +36,15 @@ class PartnerRepository(
     }
 
     override suspend fun findById(id: String): PartnerModel? {
+        runCatching {
+            val query = Filters.eq(PartnerModel::partnerId.name, id)
+            databaseClient.find(query)
+        }
+            .mapCatching {
+            }
+            .getOrElse {
+                throw DatabaseException("insert failed $it", it)
+            }
         TODO("Not yet implemented")
     }
 
