@@ -19,10 +19,10 @@ class UpdatePartnerUseCaseImpl(
             val partner = async { dataStore.findById(request.partnerId.id) }
             partner.await()
         }
-            .getOrElse { throw EditPartnerException("Failed to fetch partner ${request.partnerId}", it) }
+            .getOrElse { throw UpdatePartnerException("Failed to fetch partner ${request.partnerId}", it) }
 
         checkNotNull(maybeExistingPartner) {
-            throw EditPartnerException("Failed to edit partner ${request.partnerId} as they do not exist")
+            throw UpdatePartnerException("Failed to update partner ${request.partnerId} as they do not exist")
         }
 
         runCatching {
@@ -40,6 +40,6 @@ class UpdatePartnerUseCaseImpl(
 
             async { dataStore.update(updatedPartner) }.await()
         }
-            .getOrElse { throw EditPartnerException("Failed to edit partner ${request.partnerId}", it) }
+            .getOrElse { throw UpdatePartnerException("Failed to edit partner ${request.partnerId}", it) }
     }
 }

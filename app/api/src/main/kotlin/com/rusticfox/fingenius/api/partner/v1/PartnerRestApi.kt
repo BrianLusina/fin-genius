@@ -53,7 +53,7 @@ fun Route.partnerV1ApiRoutes() {
                     call.respond(
                         message = ApiResult(
                             status = HttpStatusCode.InternalServerError.value,
-                            message = it.message ?: "Failed to create OTP"
+                            message = it.message ?: "Failed to update parter"
                         ),
                         status = HttpStatusCode.InternalServerError
                     )
