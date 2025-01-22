@@ -24,9 +24,7 @@ class PartnerReadDataStoreAdapter(
                 checkNotNull(it) { throw NotFoundException("Partner $id does not exist") }
                 it.toPartner()
             }
-            .getOrElse {
-                throw DatabaseException("Failed to retrieve partner $id", it)
-            }
+            .getOrElse { throw DatabaseException("Failed to retrieve partner $id", it) }
     }
 
     override suspend fun findAll(pageRequest: PageRequest): Collection<Partner> {

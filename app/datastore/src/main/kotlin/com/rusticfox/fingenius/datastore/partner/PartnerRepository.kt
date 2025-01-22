@@ -11,6 +11,7 @@ import com.rusticfox.fingenius.core.ports.datastore.dto.PageRequest
 import com.rusticfox.fingenius.datastore.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 class PartnerRepository(
@@ -36,16 +37,11 @@ class PartnerRepository(
     }
 
     override suspend fun findById(id: String): PartnerModel? {
-        runCatching {
+        return runCatching {
             val query = Filters.eq(PartnerModel::partnerId.name, id)
-            databaseClient.find(query)
+            databaseClient.find(query).firstOrNull()
         }
-            .mapCatching {
-            }
-            .getOrElse {
-                throw DatabaseException("insert failed $it", it)
-            }
-        TODO("Not yet implemented")
+            .getOrElse { throw DatabaseException("insert failed $it", it) }
     }
 
     override suspend fun update(data: Partner) = withContext(coroutineDispatcher) {

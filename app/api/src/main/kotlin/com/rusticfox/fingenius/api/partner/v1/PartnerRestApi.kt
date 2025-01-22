@@ -53,11 +53,50 @@ fun Route.partnerV1ApiRoutes() {
                     call.respond(
                         message = ApiResult(
                             status = HttpStatusCode.InternalServerError.value,
-                            message = it.message ?: "Failed to update parter"
+                            message = it.message ?: "Failed to update partner"
                         ),
                         status = HttpStatusCode.InternalServerError
                     )
                 }
+        }
+
+        get {
+            runCatching {
+                val partnerId = call.parameters["id"]
+                val partnerType = call.request.queryParameters["type"]
+                val partnerStatus = call.request.queryParameters["status"]
+
+                when {
+                    partnerId != null -> {
+                        partnerService.getPartnerById(partnerId)
+                    }
+                    partnerType != null && partnerStatus == null -> {
+                        partnerService.getPartnersByType(partnerType)
+                    }
+                    partnerType != null && partnerStatus != null -> {
+                        partnerService.getPartnersByTypeAndStatus(partnerType, partnerStatus)
+                    }
+                }
+            }
+            .onSuccess {
+                call.respond(
+                    message = ApiResult(
+                        status = HttpStatusCode.OK.value,
+                        data = it,
+                        message = "Successfully retrieved"
+                    ),
+                    status = HttpStatusCode.OK,
+                )
+            }
+            .onFailure {
+                call.respond(
+                    message = ApiResult(
+                        status = HttpStatusCode.InternalServerError.value,
+                        message = it.message ?: "Failed to retrieve partner"
+                    ),
+                    status = HttpStatusCode.InternalServerError
+                )
+            }
         }
     }
 }
