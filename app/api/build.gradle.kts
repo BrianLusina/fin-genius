@@ -14,6 +14,7 @@ dependencies {
     implementation(Dependencies.Ktor.netty)
     implementation(Dependencies.Ktor.defaultHeaders)
     implementation(Dependencies.Ktor.openApi)
+    implementation(Dependencies.Ktor.serverResources)
 
     implementation(Dependencies.Kotlin.X.datetime)
 

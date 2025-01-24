@@ -18,32 +18,38 @@ interface GetPartnerByIdUseCase: UseCase<PartnerId, Partner?> {
 /**
  * Get partner by type use case
  */
-interface GetPartnersByTypeUseCase: UseCase<PartnerType, List<Partner>> {
-    override suspend operator fun invoke(request: PartnerType): List<Partner>
+interface GetPartnersByTypeUseCase: UseCase<GetPartnersByTypeUseCase.GetPartnersByTypeUseCaseRequest, Collection<Partner>> {
+    data class GetPartnersByTypeUseCaseRequest(
+        val type: PartnerType,
+        val pageRequest: PageRequest = PageRequest()
+    )
+
+    override suspend operator fun invoke(request: GetPartnersByTypeUseCaseRequest): List<Partner>
 }
 
 /**
  * Get partner by type use case
  */
-interface GetPartnersByTypeAndStatusUseCase: UseCase<GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest, List<Partner>> {
+interface GetPartnersByTypeAndStatusUseCase: UseCase<GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest, Collection<Partner>> {
     data class GetPartnersByTypAndStatusRequest(
         val type: PartnerType,
-        val status: PartnerStatus
+        val status: PartnerStatus,
+        val pageRequest: PageRequest = PageRequest()
     )
 
-    override suspend operator fun invoke(request: GetPartnersByTypAndStatusRequest): List<Partner>
+    override suspend operator fun invoke(request: GetPartnersByTypAndStatusRequest): Collection<Partner>
 }
 
 /**
  * Get all partners
  */
-interface GetAllPartnersUseCase: UseCase<GetAllPartnersUseCase.GetAllPartnersRequest, List<Partner>> {
+interface GetAllPartnersUseCase: UseCase<GetAllPartnersUseCase.GetAllPartnersRequest, Collection<Partner>> {
     data class GetAllPartnersRequest(
-        val type: PartnerType,
-        val status: PartnerStatus,
-        val openingBalance: Amount,
-        val pageRequest: PageRequest
+        val type: PartnerType ?= null,
+        val status: PartnerStatus ?= null,
+        val openingBalance: Amount? = null,
+        val pageRequest: PageRequest = PageRequest()
     )
 
-    override suspend operator fun invoke(request: GetAllPartnersRequest): List<Partner>
+    override suspend operator fun invoke(request: GetAllPartnersRequest): Collection<Partner>
 }

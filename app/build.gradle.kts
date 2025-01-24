@@ -33,6 +33,7 @@ dependencies {
     implementation(Dependencies.Ktor.authJwt)
     implementation(Dependencies.Ktor.netty)
     implementation(Dependencies.Ktor.defaultHeaders)
+    implementation(Dependencies.Ktor.serverResources)
 
     implementation(Dependencies.DI.koinCore)
     implementation(Dependencies.DI.koinKtor)

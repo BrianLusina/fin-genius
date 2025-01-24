@@ -1,10 +1,11 @@
 object Dependencies {
     object Ktor {
-        private const val version = "3.0.1"
+        private const val version = "3.0.3"
+
         const val coreJvm = "io.ktor:ktor-server-core-jvm:$version"
         const val openApi = "io.ktor:ktor-server-openapi:$version"
+        const val serverResources = "io.ktor:ktor-server-resources:$version"
         const val serverContentNegotiation = "io.ktor:ktor-server-content-negotiation:$version"
-        const val clientContentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
         const val metrics = "io.ktor:ktor-server-metrics-jvm:$version"
         const val metricsMicrometer = "io.ktor:ktor-server-metrics-micrometer-jvm:$version"
         const val callLogging = "io.ktor:ktor-server-call-logging-jvm:$version"
@@ -17,6 +18,8 @@ object Dependencies {
         const val defaultHeaders = "io.ktor:ktor-server-default-headers:$version"
 
         const val serializationJson = "io.ktor:ktor-serialization-kotlinx-json-jvm:$version"
+
+        const val clientContentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
 
         const val serverTestHost = "io.ktor:ktor-server-test-host:$version"
     }

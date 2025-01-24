@@ -6,12 +6,15 @@ import com.rusticfox.fingenius.core.entities.PartnerId
 import com.rusticfox.fingenius.core.entities.PartnerStatus
 import com.rusticfox.fingenius.core.entities.PartnerType
 import com.rusticfox.fingenius.core.exceptions.NotFoundException
+import com.rusticfox.fingenius.core.ports.datastore.dto.PageRequest
 import com.rusticfox.fingenius.core.usecases.CreatePartnerUseCase
+import com.rusticfox.fingenius.core.usecases.GetAllPartnersUseCase
 import com.rusticfox.fingenius.core.usecases.GetPartnerByIdUseCase
 import com.rusticfox.fingenius.core.usecases.GetPartnersByTypeAndStatusUseCase
 import com.rusticfox.fingenius.core.usecases.GetPartnersByTypeUseCase
 import com.rusticfox.fingenius.core.usecases.UpdatePartnerRequest
 import com.rusticfox.fingenius.core.usecases.UpdatePartnerUseCase
+import com.rusticfox.fingenius.core.values.Amount
 
 class PartnerService(
     private val createPartnerUseCase: CreatePartnerUseCase,
@@ -19,6 +22,7 @@ class PartnerService(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
     private val getPartnersByTypeUseCase: GetPartnersByTypeUseCase,
     private val getPartnersByTypeAndStatusUseCase: GetPartnersByTypeAndStatusUseCase,
+    private val getAllPartnersUseCase: GetAllPartnersUseCase,
 ) {
 
     suspend fun createPartner(payload: PartnerDto): PartnerResponseDto = run {
@@ -54,21 +58,40 @@ class PartnerService(
         existingPartner.toPartnerResponseDto()
     }
 
-    suspend fun getPartnersByType(type: String): Collection<PartnerResponseDto> = run {
-        val partnerType = PartnerType.valueOf(type)
-        val partners = getPartnersByTypeUseCase(partnerType)
-        partners
-    }
+    suspend fun getAllPartners(type: String? = null, status: String? = null, pageRequest: PageRequest): List<PartnerResponseDto> = run {
+        val partnerType = if (type !=null ) PartnerType.valueOf(type) else null
+        val partnerStatus = if (status != null) PartnerStatus.valueOf(status) else null
 
-    suspend fun getPartnersByTypeAndStatus(type: String, status: String): Collection<PartnerResponseDto> = run {
-        val partnerType = PartnerType.valueOf(type)
-        val partnerStatus = PartnerStatus.valueOf(status)
-        val partners = getPartnersByTypeAndStatusUseCase(
-            GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest(
-                type=partnerType,
-                status = partnerStatus
-            )
-        )
-        partners
+        val partners = when {
+            partnerType != null && partnerStatus == null -> {
+                getPartnersByTypeUseCase(
+                    GetPartnersByTypeUseCase.GetPartnersByTypeUseCaseRequest(
+                        type = partnerType,
+                        pageRequest = pageRequest
+                    )
+                )
+            }
+
+            partnerType != null && partnerStatus != null -> {
+                getPartnersByTypeAndStatusUseCase(
+                    GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest(
+                        type = partnerType,
+                        status = partnerStatus,
+                        pageRequest = pageRequest
+                    )
+                )
+            }
+
+            else -> {
+                getAllPartnersUseCase(
+                    GetAllPartnersUseCase.GetAllPartnersRequest(
+                        type = partnerType,
+                        status = partnerStatus,
+                        pageRequest = pageRequest
+                    )
+                )
+            }
+        }
+        partners.map { it.toPartnerResponseDto() }
     }
 }
