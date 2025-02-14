@@ -12,6 +12,12 @@ class UpdatePartnerException(message: String) : Exception(message) {
     }
 }
 
+class GetPartnersException(message: String): Exception(message) {
+    constructor(message: String, cause: Throwable? = null) : this(message) {
+        initCause(cause)
+    }
+}
+
 class GetPartnerByIdException(message: String): Exception(message) {
     constructor(message: String, cause: Throwable? = null) : this(message) {
         initCause(cause)

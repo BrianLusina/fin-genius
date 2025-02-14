@@ -24,20 +24,20 @@ interface GetPartnersByTypeUseCase: UseCase<GetPartnersByTypeUseCase.GetPartners
         val pageRequest: PageRequest = PageRequest()
     )
 
-    override suspend operator fun invoke(request: GetPartnersByTypeUseCaseRequest): List<Partner>
+    override suspend operator fun invoke(request: GetPartnersByTypeUseCaseRequest): Collection<Partner>
 }
 
 /**
  * Get partner by type use case
  */
-interface GetPartnersByTypeAndStatusUseCase: UseCase<GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest, Collection<Partner>> {
-    data class GetPartnersByTypAndStatusRequest(
+interface GetPartnersByTypeAndStatusUseCase: UseCase<GetPartnersByTypeAndStatusUseCase.GetPartnersByTypeAndStatusRequest, Collection<Partner>> {
+    data class GetPartnersByTypeAndStatusRequest(
         val type: PartnerType,
         val status: PartnerStatus,
         val pageRequest: PageRequest = PageRequest()
     )
 
-    override suspend operator fun invoke(request: GetPartnersByTypAndStatusRequest): Collection<Partner>
+    override suspend operator fun invoke(request: GetPartnersByTypeAndStatusRequest): Collection<Partner>
 }
 
 /**

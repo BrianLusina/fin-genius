@@ -8,10 +8,30 @@ data class PageRequestSort(
 enum class PageSortFields {
     CREATED_ON,
     UPDATED_ON,
-    DELETED_ON
+    DELETED_ON;
+
+    companion object {
+        fun fromString(value: String?): PageSortFields {
+            return if (value != null) {
+                runCatching { PageSortFields.valueOf(value.uppercase()) }.getOrElse { CREATED_ON }
+            } else {
+                CREATED_ON
+            }
+        }
+    }
 }
 
 enum class PageSortOrder {
     ASC,
-    DESC
+    DESC;
+    
+    companion object {
+        fun fromString(value: String?): PageSortOrder {
+            return if (value != null) {
+                runCatching { PageSortOrder.valueOf(value.uppercase()) }.getOrElse { ASC }
+            } else {
+                ASC
+            }
+        }
+    }
 }

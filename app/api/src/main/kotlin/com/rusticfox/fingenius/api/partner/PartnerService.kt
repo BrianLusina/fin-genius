@@ -14,7 +14,6 @@ import com.rusticfox.fingenius.core.usecases.GetPartnersByTypeAndStatusUseCase
 import com.rusticfox.fingenius.core.usecases.GetPartnersByTypeUseCase
 import com.rusticfox.fingenius.core.usecases.UpdatePartnerRequest
 import com.rusticfox.fingenius.core.usecases.UpdatePartnerUseCase
-import com.rusticfox.fingenius.core.values.Amount
 
 class PartnerService(
     private val createPartnerUseCase: CreatePartnerUseCase,
@@ -74,7 +73,7 @@ class PartnerService(
 
             partnerType != null && partnerStatus != null -> {
                 getPartnersByTypeAndStatusUseCase(
-                    GetPartnersByTypeAndStatusUseCase.GetPartnersByTypAndStatusRequest(
+                    GetPartnersByTypeAndStatusUseCase.GetPartnersByTypeAndStatusRequest(
                         type = partnerType,
                         status = partnerStatus,
                         pageRequest = pageRequest

@@ -1,13 +1,19 @@
 package com.rusticfox.fingenius.datastore.partner
 
+import com.mongodb.client.model.BsonField
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Sorts
 import com.mongodb.client.model.UpdateOptions
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoCollection
 import com.rusticfox.fingenius.core.entities.Partner
+import com.rusticfox.fingenius.core.entities.PartnerStatus
+import com.rusticfox.fingenius.core.entities.PartnerType
 import com.rusticfox.fingenius.core.exceptions.DatabaseException
 import com.rusticfox.fingenius.core.exceptions.NotFoundException
 import com.rusticfox.fingenius.core.ports.datastore.dto.PageRequest
+import com.rusticfox.fingenius.core.ports.datastore.dto.PageSortOrder
+import com.rusticfox.fingenius.core.values.Amount
 import com.rusticfox.fingenius.datastore.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +27,7 @@ class PartnerRepository(
 
     override suspend fun insert(data: Partner): PartnerModel = withContext(coroutineDispatcher) {
         val record = data.toPartnerModel()
-        runCatching {
-            databaseClient.insertOne(record)
-        }
+        runCatching { databaseClient.insertOne(record) }
             .mapCatching {
                 if (it.wasAcknowledged()) {
                     record
@@ -67,6 +71,42 @@ class PartnerRepository(
 
     override suspend fun findAll(pageRequest: PageRequest): Collection<PartnerModel> {
         TODO("Not yet implemented")
+    }
+
+    /**
+     * Retrieves all partners from the repository, filtered by the given criteria.
+     *
+     * @param type The partner type to filter by. If null, all types are returned.
+     * @param status The partner status to filter by. If null, all statuses are returned.
+     * @param openingBalance The opening balance to filter by. If null, all partners are returned.
+     * @param pageRequest The page request containing the page number and size to retrieve.
+     * @return A collection of partner models matching the given criteria, sorted by the natural order of the partner objects.
+     */
+    suspend fun findAll(type: PartnerType?, status: PartnerStatus?, openingBalance: Amount?, pageRequest: PageRequest): Collection<PartnerModel> = withContext(coroutineDispatcher) {
+        runCatching {
+            val filters = Filters.and(
+                Filters.eq(Partner::type.name, type),
+                Filters.eq(Partner::status.name, status),
+                openingBalance?.let { Filters.gte(Amount::value.name, it.value) },
+            )
+
+            val sort = when(pageRequest.sortFields.order) {
+                PageSortOrder.ASC -> {
+                    Sorts.ascending(Partner::creationDate.name)
+                }
+                PageSortOrder.DESC -> {
+                    Sorts.descending(Partner::creationDate.name)
+                }
+            }
+
+            val partners = databaseClient.find(filters)
+                .skip(pageRequest.number.toInt() * pageRequest.size)
+                .limit(pageRequest.size)
+                .sort(sort)
+        }
+            .getOrElse {
+                throw DatabaseException("Failed to fetch partners", it)
+            }
     }
 
     override suspend fun delete(id: String) {
